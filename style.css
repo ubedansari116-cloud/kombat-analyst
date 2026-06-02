@@ -1,0 +1,33 @@
+body {
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    color: orange;
+}
+
+.fighter-card {
+    border: 1px solid #333;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+#search-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+header {
+    margin-bottom: 25px;
+}
+
+header p {
+    color: #aaa;
+    margin-top: -10px;
+}
