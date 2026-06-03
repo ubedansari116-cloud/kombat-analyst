@@ -308,3 +308,60 @@ h1 {
 .advantages-box p {
     margin: 8px 0;
 }
+.heatmap-section {
+    margin-top: 35px;
+}
+
+.heatmap-section h2 {
+    color: #FBBF24;
+    margin-bottom: 20px;
+}
+
+.heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.heatmap-card {
+    background: #0B1020;
+    border: 1px solid #333;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: left;
+}
+
+.heatmap-card h3 {
+    color: #FBBF24;
+    margin-top: 0;
+    text-align: center;
+}
+
+.heat-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 55px;
+    align-items: center;
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.heat-row span {
+    font-weight: bold;
+}
+
+.heat-row strong {
+    text-align: right;
+}
+
+.heat-bar {
+    height: 12px;
+    background: #1f2937;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.heat-bar div {
+    height: 100%;
+    background: linear-gradient(90deg, #1E3A8A, #FBBF24);
+    border-radius: 999px;
+}
