@@ -427,3 +427,22 @@ document.addEventListener("click", (event) => {
     compareFighters();
   }
 });
+loadFighters();
+
+document.addEventListener("click", (event) => {
+  if (event.target.id === "compare-btn") {
+    compareFighters();
+  }
+});
+
+document.addEventListener("input", (event) => {
+  if (event.target.id === "search-input") {
+    const searchTerm = event.target.value.toLowerCase();
+
+    const filteredFighters = allFighters.filter((fighter) =>
+      fighter.name.toLowerCase().includes(searchTerm)
+    );
+
+    displayFighters(filteredFighters);
+  }
+});
