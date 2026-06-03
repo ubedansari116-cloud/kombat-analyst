@@ -9,7 +9,6 @@ const supabaseClient = supabase.createClient(
 
 async function loadFighter() {
   const params = new URLSearchParams(window.location.search);
-
   const fighterId = params.get("id");
 
   const { data, error } = await supabaseClient
@@ -23,36 +22,87 @@ async function loadFighter() {
     return;
   }
 
+  let imageName = data.name.toLowerCase().split(" ")[0];
+
+  if (data.name === "Sean Strickland") {
+    imageName = "Strickland";
+  }
+
   const profile = document.getElementById("fighter-profile");
 
   profile.innerHTML = `
-    <h1>${data.name}</h1>
+    <div class="fighter-profile-card">
 
-    <p><strong>Nickname:</strong> ${data.nickname || "N/A"}</p>
+      <img
+        src="images/${imageName}.jpg"
+        alt="${data.name}"
+        class="profile-image"
+        onerror="this.src='https://placehold.co/600x600/FF6600/111111?text=${encodeURIComponent(data.name)}';"
+      >
 
-    <p><strong>Division:</strong> ${data.division}</p>
+      <h1>${data.name}</h1>
 
-    <p><strong>Record:</strong> ${data.record}</p>
+      <h2>${data.nickname || "No Nickname"}</h2>
 
-    <p><strong>Country:</strong> ${data.country}</p>
+      <div class="fighter-badges">
+        <span>${data.rank || "Unranked"}</span>
+        <span>${data.division}</span>
+      </div>
 
-    <p><strong>Reach:</strong> ${data.reach}"</p>
+      <div class="stats-grid">
 
-    <p><strong>Striking Accuracy:</strong> ${data.striking_accuracy}%</p>
+        <div class="stat-box">
+          <h3>Record</h3>
+          <p>${data.record}</p>
+        </div>
 
-    <p><strong>Striking Defense:</strong> ${data.striking_defense}%</p>
+        <div class="stat-box">
+          <h3>Country</h3>
+          <p>${data.country}</p>
+        </div>
 
-    <p><strong>Takedown Avg:</strong> ${data.takedown_avg}</p>
+        <div class="stat-box">
+          <h3>Reach</h3>
+          <p>${data.reach}"</p>
+        </div>
 
-    <p><strong>Takedown Accuracy:</strong> ${data.takedown_accuracy}%</p>
+        <div class="stat-box">
+          <h3>Striking Accuracy</h3>
+          <p>${data.striking_accuracy}%</p>
+        </div>
 
-    <p><strong>Takedown Defense:</strong> ${data.takedown_defense}%</p>
+        <div class="stat-box">
+          <h3>Striking Defense</h3>
+          <p>${data.striking_defense}%</p>
+        </div>
 
-    <p><strong>KO %:</strong> ${data.ko_percent}%</p>
+        <div class="stat-box">
+          <h3>Takedown Avg</h3>
+          <p>${data.takedown_avg}</p>
+        </div>
 
-    <p><strong>Submission %:</strong> ${data.sub_percent}%</p>
+        <div class="stat-box">
+          <h3>Takedown Accuracy</h3>
+          <p>${data.takedown_accuracy}%</p>
+        </div>
 
-    <p><strong>Rank:</strong> ${data.rank || "Unranked"}</p>
+        <div class="stat-box">
+          <h3>Takedown Defense</h3>
+          <p>${data.takedown_defense}%</p>
+        </div>
+
+        <div class="stat-box">
+          <h3>KO %</h3>
+          <p>${data.ko_percent}%</p>
+        </div>
+
+        <div class="stat-box">
+          <h3>Submission %</h3>
+          <p>${data.sub_percent}%</p>
+        </div>
+
+      </div>
+    </div>
   `;
 }
 

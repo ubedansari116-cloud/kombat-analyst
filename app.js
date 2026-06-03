@@ -22,18 +22,31 @@ function displayFighters(fighters) {
     card.classList.add("fighter-card");
 
     card.style.cursor = "pointer";
-    
+
     card.addEventListener("click", () => {
-        window.location.href = `fighter.html?id=${fighter.id}`;
-});
+      window.location.href = `fighter.html?id=${fighter.id}`;
+    });
+
+    let imageName = fighter.name.toLowerCase().split(" ")[0];
+
+    if (fighter.name === "Sean Strickland") {
+      imageName = "Strickland";
+    }
 
     card.innerHTML = `
-      <h2>${fighter.name}</h2>
-      <p><strong>Nickname:</strong> ${fighter.nickname || "N/A"}</p>
-      <p><strong>Division:</strong> ${fighter.division}</p>
-      <p><strong>Record:</strong> ${fighter.record}</p>
-      <p><strong>Country:</strong> ${fighter.country}</p>
-      <p><strong>Rank:</strong> ${fighter.rank || "Unranked"}</p>
+      <div class="fighter-image-container">
+        <img
+          src="images/${imageName}.jpg"
+          alt="${fighter.name}"
+          class="fighter-image"
+          onerror="this.src='https://placehold.co/300x300/FF6600/111111?text=${encodeURIComponent(
+            fighter.name
+          )}';">
+      </div>
+
+      <div class="fighter-name">${fighter.name}</div>
+
+      <div class="fighter-record">${fighter.record}</div>
     `;
 
     container.appendChild(card);
