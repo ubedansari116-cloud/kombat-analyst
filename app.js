@@ -420,29 +420,36 @@ function compareFighters() {
   `;
 }
 
-loadFighters();
+function searchFighters() {
+  const searchInput =
+    document.getElementById("search-input");
 
-document.addEventListener("click", (event) => {
-  if (event.target.id === "compare-btn") {
-    compareFighters();
-  }
-});
-loadFighters();
+  const searchTerm =
+    searchInput.value.toLowerCase();
 
-document.addEventListener("click", (event) => {
-  if (event.target.id === "compare-btn") {
-    compareFighters();
-  }
-});
-
-document.addEventListener("input", (event) => {
-  if (event.target.id === "search-input") {
-    const searchTerm = event.target.value.toLowerCase();
-
-    const filteredFighters = allFighters.filter((fighter) =>
-      fighter.name.toLowerCase().includes(searchTerm)
+  const filteredFighters =
+    allFighters.filter((fighter) =>
+      fighter.name
+        .toLowerCase()
+        .includes(searchTerm)
     );
 
-    displayFighters(filteredFighters);
+  displayFighters(filteredFighters);
+}
+
+window.searchFighters =
+  searchFighters;
+
+loadFighters();
+
+document.addEventListener(
+  "click",
+  (event) => {
+    if (
+      event.target.id ===
+      "compare-btn"
+    ) {
+      compareFighters();
+    }
   }
-});
+);
