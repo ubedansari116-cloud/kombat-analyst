@@ -160,6 +160,31 @@ function getImageName(fighterName) {
     .split(" ")[0];
 }
 
+function calculateFighterScore(fighter) {
+
+  return (
+
+    fighter.striking_accuracy * 0.15 +
+
+    fighter.striking_defense * 0.15 +
+
+    fighter.takedown_defense * 0.20 +
+
+    fighter.ko_percent * 0.15 +
+
+    fighter.sub_percent * 0.15 +
+
+    fighter.head_attack * 0.05 +
+
+    fighter.body_attack * 0.05 +
+
+    fighter.leg_attack * 0.05 +
+
+    fighter.head_defense * 0.05
+
+  );
+
+}
 
 function compareFighters() {
   const fighterAId =
@@ -251,6 +276,24 @@ else if (fighterB.sub_percent > fighterA.sub_percent) {
   );
 }
 let overallEdge = "Even Matchup";
+const fighterAScore =
+  calculateFighterScore(fighterA);
+
+const fighterBScore =
+  calculateFighterScore(fighterB);
+
+const totalScore =
+  fighterAScore + fighterBScore;
+
+const fighterAProbability =
+  (
+    (fighterAScore / totalScore) * 100
+  ).toFixed(1);
+
+const fighterBProbability =
+  (
+    (fighterBScore / totalScore) * 100
+  ).toFixed(1);
 
 if (fighterAWins > fighterBWins)
   overallEdge = fighterA.name;
@@ -353,7 +396,35 @@ ${createComparisonRow(
     .join("")}
 
 </div>
-      <div class="summary-box">
+<div class="probability-box">
+
+  <h3>Kombat Analyst Score</h3>
+
+  <div class="probability-row">
+
+    <span>${fighterA.name}</span>
+
+    <strong>${fighterAProbability}%</strong>
+
+  </div>
+
+  <div class="probability-bar">
+    <div
+      class="probability-fill"
+      style="width: ${fighterAProbability}%"
+    ></div>
+  </div>
+
+  <div class="probability-row">
+
+    <span>${fighterB.name}</span>
+
+    <strong>${fighterBProbability}%</strong>
+
+  </div>
+
+</div>
+<div class="summary-box">
 
   <h3>Overall Edge</h3>
 

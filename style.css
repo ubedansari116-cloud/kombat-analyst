@@ -365,3 +365,35 @@ h1 {
     background: linear-gradient(90deg, #1E3A8A, #FBBF24);
     border-radius: 999px;
 }
+.probability-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #111827;
+    border: 1px solid #333;
+    border-radius: 14px;
+}
+
+.probability-box h3 {
+    color: #FBBF24;
+    margin-top: 0;
+}
+
+.probability-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.probability-bar {
+    height: 14px;
+    background: #1f2937;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.probability-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FBBF24, #F59E0B);
+}
