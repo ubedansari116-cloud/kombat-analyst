@@ -345,12 +345,11 @@ const fighterBProbability =
   (
     (fighterBScore / totalScore) * 100
   ).toFixed(1);
-  const fightVerdict =
-  generateFightVerdict(
-    fighterA,
-    fighterB,
-    overallEdge
-  );
+  if (fighterAWins > fighterBWins)
+  overallEdge = fighterA.name;
+
+if (fighterBWins > fighterAWins)
+  overallEdge = fighterB.name;
 
 if (fighterAWins > fighterBWins)
   overallEdge = fighterA.name;
@@ -517,9 +516,8 @@ if (fighterBWins > fighterAWins)
 }
 loadFighters();
 
-document
-  .getElementById("compare-btn")
-  .addEventListener(
-    "click",
-    compareFighters
-  );
+const compareBtn = document.getElementById("compare-btn");
+
+if (compareBtn) {
+  compareBtn.addEventListener("click", compareFighters);
+}
