@@ -25,8 +25,8 @@ async function loadFighter() {
   let imageName = data.name.toLowerCase().split(" ")[0];
 
   if (data.name === "Sean Strickland") {
-    imageName = "Strickland";
-  }
+  imageName = "strickland";
+}
 
   const profile = document.getElementById("fighter-profile");
 
