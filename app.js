@@ -29,7 +29,7 @@ function displayFighters(fighters) {
     
     let imageName = fighter.name.toLowerCase().split(" ")[0];
     if (fighter.name === "Sean Strickland") {
-        imageName = "strickland";
+        imageName = "Strickland";
     }
 
     card.innerHTML = `
@@ -150,7 +150,7 @@ function createComparisonRow(label, statA, statB, suffix = "") {
 function getImageName(fighterName) {
 
   if (fighterName === "Sean Strickland")
-    return "strickland";
+    return "Strickland";
 
   if (fighterName === "Sean O'Malley")
     return "sean";
