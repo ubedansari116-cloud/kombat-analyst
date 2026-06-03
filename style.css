@@ -8,24 +8,39 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
+#fighter-count {
+    color: #94A3B8;
+    font-size: 1rem;
+}
 h1 {
     color: #FBBF24;
     font-size: 2.8rem;
 }
 
 #search-input {
-    width: 100%;
+    display: block;
+    width: 70%;
     max-width: 700px;
-    margin: 0 auto 40px;
+    min-width: 300px;
+
+    margin: 0 auto 40px auto;
+
     padding: 16px 20px;
     font-size: 1.1rem;
+
     background-color: #1f1f1f;
     border: 1px solid #444;
     border-radius: 50px;
+
     color: white;
+}
+#fighters-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
 }
 
 .fighter-card {
@@ -37,6 +52,7 @@ h1 {
     transition: all 0.3s ease;
     cursor: pointer;
     text-align: center;
+    width: 100%;
 }
 
 .fighter-card:hover {
@@ -160,4 +176,135 @@ h1 {
     margin-bottom: 0;
     font-size: 1.1rem;
     font-weight: bold;
+}
+.fighter-rank-badge {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #FBBF24, #F59E0B);
+    color: #111;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.25);
+}
+.comparison-section {
+    max-width: 800px;
+    margin: 30px auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.comparison-section h2 {
+    margin-bottom: 20px;
+}
+
+.comparison-section select,
+.comparison-section button {
+    padding: 12px;
+    margin: 8px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+}
+
+.comparison-section button {
+    cursor: pointer;
+    font-weight: bold;
+    background: #FBBF24;
+    color: #111;
+}
+
+#comparison-results {
+    max-width: 900px;
+    margin: 30px auto;
+}
+.comparison-card {
+    background: #131A2A;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #333;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    text-align: center;
+}
+
+.comparison-table th {
+    color: #FBBF24;
+}
+.style-matchup {
+    color: #FBBF24;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.winner {
+    color: #22C55E;
+    font-weight: bold;
+}
+.summary-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #0B1020;
+    border: 1px solid #333;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.summary-box h3 {
+    color: #FBBF24;
+    margin-top: 0;
+}
+.comparison-fighters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.comparison-fighter {
+    text-align: center;
+}
+
+.comparison-image {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #FBBF24;
+}
+
+.vs-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FBBF24;
+}
+.advantages-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #111827;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+.advantages-box h3 {
+    color: #FBBF24;
+    margin-top: 0;
+}
+
+.advantages-box p {
+    margin: 8px 0;
 }
