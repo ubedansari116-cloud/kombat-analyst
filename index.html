@@ -11,33 +11,77 @@
 </head>
 <body>
 
-    <header>
-    <h1>Kombat Analyst</h1>
-    <p id="fighter-count">Loading fighters...</p>
+    <header class="hero-section">
+    <div class="hero-content">
+        <p class="hero-kicker">UFC Intelligence Platform</p>
+
+        <h1>Kombat Analyst</h1>
+
+        <p class="hero-subtitle">
+            Fight analytics. Style matchups. Win probability.
+        </p>
+
+        <p id="fighter-count">Loading fighters...</p>
+    </div>
 </header>
+<section class="fight-night-hero">
+    <p class="section-kicker">Featured Matchup</p>
 
-<input
-    type="text"
-    id="search-input"
-    placeholder="Search fighters..."
->
-<div class="comparison-section">
+    <h2>Islam Makhachev vs Charles Oliveira</h2>
 
-    <h2>Compare Fighters</h2>
+    <p class="fight-night-subtitle">
+        Grappling pressure meets submission danger.
+    </p>
 
-    <select id="fighter-a">
-        <option value="">Select Fighter A</option>
-    </select>
+    <div class="fight-night-score">
+        <div>
+            <span>Islam Makhachev</span>
+            <strong>56%</strong>
+        </div>
 
-    <select id="fighter-b">
-        <option value="">Select Fighter B</option>
-    </select>
+        <div>
+            <span>Charles Oliveira</span>
+            <strong>44%</strong>
+        </div>
+    </div>
+</section>
 
-    <button id="compare-btn">
-        Compare
-    </button>
+<section class="command-center">
 
-</div>
+    <div class="command-header">
+        <p class="section-kicker">Command Center</p>
+        <h2>Search. Compare. Analyze.</h2>
+    </div>
+
+    <input
+        type="text"
+        id="search-input"
+        placeholder="Search fighters..."
+    >
+
+    <div class="comparison-section">
+
+        <h3>Compare Fighters</h3>
+
+        <div class="comparison-controls">
+
+            <select id="fighter-a">
+                <option value="">Select Fighter A</option>
+            </select>
+
+            <select id="fighter-b">
+                <option value="">Select Fighter B</option>
+            </select>
+
+            <button id="compare-btn">
+                Compare
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
 
 <div id="comparison-results"></div>
 

@@ -43,17 +43,29 @@ function displayFighters(fighters) {
           )}';">
       </div>
 
-<div class="fighter-rank-badge">
-  ${
-    fighter.rank === "Champion"
-      ? "🏆 Champion"
-      : fighter.rank || "Unranked"
-  }
+<div class="fighter-card-overlay">
+
+  <div class="fighter-rank-badge">
+    ${
+      fighter.rank === "Champion"
+        ? "🏆 Champion"
+        : fighter.rank || "Unranked"
+    }
+  </div>
+
+  <div class="fighter-division">
+    ${fighter.division}
+  </div>
+
+  <div class="fighter-name">
+    ${fighter.name}
+  </div>
+
+  <div class="fighter-record">
+    ${fighter.record}
+  </div>
+
 </div>
-
-<div class="fighter-name">${fighter.name}</div>
-
-<div class="fighter-record">${fighter.record}</div>
     `;
 
     container.appendChild(card);
@@ -148,16 +160,15 @@ function createComparisonRow(label, statA, statB, suffix = "") {
 }
 
 function getImageName(fighterName) {
-
-  if (fighterName === "Sean Strickland")
+  if (fighterName === "Sean Strickland") {
     return "Strickland";
+  }
 
-  if (fighterName === "Sean O'Malley")
+  if (fighterName === "Sean O'Malley") {
     return "sean";
+  }
 
-  return fighterName
-    .toLowerCase()
-    .split(" ")[0];
+  return fighterName.toLowerCase().split(" ")[0];
 }
 
 function calculateFighterScore(fighter) {
@@ -184,6 +195,46 @@ function calculateFighterScore(fighter) {
 
   );
 
+}
+
+function generateFightVerdict(fighterA, fighterB, overallEdge) {
+  let verdict = "";
+
+  verdict += `${overallEdge} appears to hold the statistical edge in this matchup. `;
+
+  if (
+    fighterA.fighting_style.includes("Wrestler") ||
+    fighterA.fighting_style.includes("Grappler")
+  ) {
+    verdict += `${fighterA.name}'s grappling-heavy style could force ${fighterB.name} into defensive scrambles. `;
+  }
+
+  if (
+    fighterB.fighting_style.includes("Wrestler") ||
+    fighterB.fighting_style.includes("Grappler")
+  ) {
+    verdict += `${fighterB.name}'s grappling threat could heavily influence the pace of the fight. `;
+  }
+
+  if (fighterA.ko_percent > fighterB.ko_percent) {
+    verdict += `${fighterA.name} carries the stronger knockout threat. `;
+  } else if (fighterB.ko_percent > fighterA.ko_percent) {
+    verdict += `${fighterB.name} carries the stronger knockout threat. `;
+  }
+
+  if (fighterA.sub_percent > fighterB.sub_percent) {
+    verdict += `${fighterA.name} is the more dangerous submission threat. `;
+  } else if (fighterB.sub_percent > fighterA.sub_percent) {
+    verdict += `${fighterB.name} is the more dangerous submission threat. `;
+  }
+
+  if (fighterA.takedown_defense > fighterB.takedown_defense) {
+    verdict += `${fighterA.name}'s takedown defense may help them keep the fight in preferred positions.`;
+  } else if (fighterB.takedown_defense > fighterA.takedown_defense) {
+    verdict += `${fighterB.name}'s takedown defense may help them control where the fight happens.`;
+  }
+
+  return verdict;
 }
 
 function compareFighters() {
@@ -294,6 +345,12 @@ const fighterBProbability =
   (
     (fighterBScore / totalScore) * 100
   ).toFixed(1);
+  const fightVerdict =
+  generateFightVerdict(
+    fighterA,
+    fighterB,
+    overallEdge
+  );
 
 if (fighterAWins > fighterBWins)
   overallEdge = fighterA.name;
@@ -301,147 +358,162 @@ if (fighterAWins > fighterBWins)
 if (fighterBWins > fighterAWins)
   overallEdge = fighterB.name;
   results.innerHTML = `
-    <div class="comparison-card">
+  <div class="comparison-card">
 
-<div class="comparison-fighters">
+    <div class="arena-header">
+      <p class="arena-kicker">Fight Matchup Analysis</p>
 
-  <div class="comparison-fighter">
+      <h2 class="arena-title">
+        ${fighterA.name}
+        <span>VS</span>
+        ${fighterB.name}
+      </h2>
+    </div>
 
-    <img
-      src="images/${getImageName(fighterA.name)}.jpg"
-      alt="${fighterA.name}"
-      class="comparison-image"
-    >
+    <div class="comparison-fighters">
 
-    <h3>${fighterA.name}</h3>
+      <div class="comparison-fighter">
+        <img
+          src="images/${getImageName(fighterA.name)}.jpg"
+          alt="${fighterA.name}"
+          class="comparison-image"
+        >
 
-  </div>
+        <h3>${fighterA.name}</h3>
+      </div>
 
-  <div class="vs-text">VS</div>
+      <div class="vs-text">VS</div>
 
-  <div class="comparison-fighter">
+      <div class="comparison-fighter">
+        <img
+          src="images/${getImageName(fighterB.name)}.jpg"
+          alt="${fighterB.name}"
+          class="comparison-image"
+        >
 
-    <img
-      src="images/${getImageName(fighterB.name)}.jpg"
-      alt="${fighterB.name}"
-      class="comparison-image"
-    >
-
-    <h3>${fighterB.name}</h3>
-
-  </div>
-
-</div>
-
-<p class="style-matchup">
-  ${fighterA.fighting_style}
-  vs
-  ${fighterB.fighting_style}
-</p>
-
-      <table class="comparison-table">
-
-        <tr>
-          <th>Stat</th>
-          <th>${fighterA.name}</th>
-          <th>${fighterB.name}</th>
-        </tr>
-
-        <tr>
-          <td>Record</td>
-          <td>${fighterA.record}</td>
-          <td>${fighterB.record}</td>
-        </tr>
-
-${createComparisonRow(
-  "Striking Accuracy",
-  fighterA.striking_accuracy,
-  fighterB.striking_accuracy,
-  "%"
-)}
-${createComparisonRow(
-  "Striking Defense",
-  fighterA.striking_defense,
-  fighterB.striking_defense,
-  "%"
-)}
-
-${createComparisonRow(
-  "Takedown Defense",
-  fighterA.takedown_defense,
-  fighterB.takedown_defense,
-  "%"
-)}
-
-${createComparisonRow(
-  "KO %",
-  fighterA.ko_percent,
-  fighterB.ko_percent,
-  "%"
-)}
-
-${createComparisonRow(
-  "Submission %",
-  fighterA.sub_percent,
-  fighterB.sub_percent,
-  "%"
-)}
-      </table>
-      <div class="advantages-box">
-
-  <h3>Advantages</h3>
-
-  ${advantages
-    .map(item => `<p>✓ ${item}</p>`)
-    .join("")}
-
-</div>
-<div class="probability-box">
-
-  <h3>Kombat Analyst Score</h3>
-
-  <div class="probability-row">
-
-    <span>${fighterA.name}</span>
-
-    <strong>${fighterAProbability}%</strong>
-
-  </div>
-
-  <div class="probability-bar">
-    <div
-      class="probability-fill"
-      style="width: ${fighterAProbability}%"
-    ></div>
-  </div>
-
-  <div class="probability-row">
-
-    <span>${fighterB.name}</span>
-
-    <strong>${fighterBProbability}%</strong>
-
-  </div>
-
-</div>
-<div class="summary-box">
-
-  <h3>Overall Edge</h3>
-
-  <p>${overallEdge}</p>
-
-  <p>
-    ${fighterA.name}: ${fighterAWins} category wins
-  </p>
-
-  <p>
-    ${fighterB.name}: ${fighterBWins} category wins
-  </p>
-
-</div>
+        <h3>${fighterB.name}</h3>
+      </div>
 
     </div>
-  `;
+
+    <p class="style-matchup">
+      ${fighterA.fighting_style}
+      vs
+      ${fighterB.fighting_style}
+    </p>
+
+    <div class="probability-box">
+
+      <h3>Kombat Analyst Score</h3>
+
+      <div class="probability-fighters">
+        <span>${fighterA.name}</span>
+        <span>${fighterB.name}</span>
+      </div>
+
+      <div class="probability-bar">
+        <div
+          class="probability-fill"
+          style="width: ${fighterAProbability}%"
+        ></div>
+      </div>
+
+      <div class="probability-values">
+        <strong>${fighterAProbability}%</strong>
+        <strong>${fighterBProbability}%</strong>
+      </div>
+
+    </div>
+
+    <div class="advantages-box">
+
+      <h3>Advantages</h3>
+
+      ${advantages
+        .map(item => `<p>✓ ${item}</p>`)
+        .join("")}
+
+    </div>
+
+   <div class="analysis-box">
+
+  <h3>Smart Fight Verdict</h3>
+
+  <p>
+    ${fightVerdict}
+  </p>
+
+</div>
+
+    <table class="comparison-table">
+
+      <tr>
+        <th>Stat</th>
+        <th>${fighterA.name}</th>
+        <th>${fighterB.name}</th>
+      </tr>
+
+      <tr>
+        <td>Record</td>
+        <td>${fighterA.record}</td>
+        <td>${fighterB.record}</td>
+      </tr>
+
+      ${createComparisonRow(
+        "Striking Accuracy",
+        fighterA.striking_accuracy,
+        fighterB.striking_accuracy,
+        "%"
+      )}
+
+      ${createComparisonRow(
+        "Striking Defense",
+        fighterA.striking_defense,
+        fighterB.striking_defense,
+        "%"
+      )}
+
+      ${createComparisonRow(
+        "Takedown Defense",
+        fighterA.takedown_defense,
+        fighterB.takedown_defense,
+        "%"
+      )}
+
+      ${createComparisonRow(
+        "KO %",
+        fighterA.ko_percent,
+        fighterB.ko_percent,
+        "%"
+      )}
+
+      ${createComparisonRow(
+        "Submission %",
+        fighterA.sub_percent,
+        fighterB.sub_percent,
+        "%"
+      )}
+
+    </table>
+
+    <div class="summary-box">
+
+      <h3>Overall Edge</h3>
+
+      <p>${overallEdge}</p>
+
+      <p>
+        ${fighterA.name}: ${fighterAWins} category wins
+      </p>
+
+      <p>
+        ${fighterB.name}: ${fighterBWins} category wins
+      </p>
+
+    </div>
+
+  </div>
+`;
 }
 loadFighters();
 
