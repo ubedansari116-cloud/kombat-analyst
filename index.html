@@ -10,8 +10,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+    <nav class="navbar">
 
-    <header class="hero-section">
+    <div class="nav-logo">
+        Kombat Analyst
+    </div>
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="#compare-section">
+            Compare
+        </a>
+
+        <a href="#fighters-container">
+            Fighters
+        </a>
+
+    </div>
+
+</nav>
+
+<header class="hero-section">
     <div class="hero-content">
         <p class="hero-kicker">UFC Intelligence Platform</p>
 
@@ -24,7 +47,7 @@
         <p id="fighter-count">Loading fighters...</p>
     </div>
 </header>
-<section class="fight-night-hero">
+<section class="fight-night-hero fade-section">
     <p class="section-kicker">Featured Matchup</p>
 
     <h2>Islam Makhachev vs Charles Oliveira</h2>
@@ -46,7 +69,7 @@
     </div>
 </section>
 
-<section class="command-center">
+<section class="command-center fade-section" id="compare-section">
 
     <div class="command-header">
         <p class="section-kicker">Command Center</p>
@@ -86,7 +109,45 @@
 
 <div id="comparison-results"></div>
 
-<div id="fighters-container"></div>
+<div
+    id="fighters-container"
+    class="fade-section"
+></div>
+<footer class="site-footer">
+
+    <div class="footer-content">
+
+        <h3>Kombat Analyst</h3>
+
+        <p>
+            Combat sports intelligence platform.
+            Fight analytics, matchup systems, and fighter insights.
+        </p>
+
+        <div class="footer-links">
+
+            <a
+            href="https://x.com/@KOmbat_IQ7"
+            target="_blank"
+            >
+            Twitter
+        </a>
+
+            <a
+            href="https://instagram.com/k.o.mbat_iq"
+            target="_blank"
+            >
+            Instagram
+        </a>
+        </div>
+
+        <p class="footer-copy">
+            © 2026 Kombat Analyst
+        </p>
+
+    </div>
+
+</footer>
 
     <script src="app.js?v=3"></script>
 

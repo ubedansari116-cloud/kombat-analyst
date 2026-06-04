@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
     background-color: #0B1020;
     color: #e0e0e0;
@@ -398,17 +403,20 @@ h1 {
     background: linear-gradient(90deg, #FBBF24, #F59E0B);
 }
 .hero-section {
-    min-height: 320px;
+    min-height: 80vh;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    padding: 80px 40px 40px;
+
     text-align: center;
-    margin: -20px -20px 40px -20px;
-    padding: 60px 20px;
+
     background:
-        radial-gradient(circle at top, rgba(251, 191, 36, 0.22), transparent 35%),
-        linear-gradient(135deg, #050816, #0B1020 55%, #111827);
-    border-bottom: 1px solid rgba(251, 191, 36, 0.25);
+        radial-gradient(circle at top,
+        rgba(251,191,36,0.15),
+        transparent 45%);
 }
 
 .hero-content {
@@ -529,7 +537,14 @@ h1 {
 }
 
 .comparison-controls button:hover {
-    transform: translateY(-2px);
+
+    transform:
+        translateY(-2px)
+        scale(1.02);
+
+    box-shadow:
+        0 0 20px rgba(251,191,36,0.35);
+
 }
 
 @media (max-width: 760px) {
@@ -891,4 +906,331 @@ html {
     .fight-night-score {
         grid-template-columns: 1fr;
     }
+}
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 32px;
+
+    background: rgba(5, 8, 22, 0.88);
+
+    backdrop-filter: blur(14px);
+
+    border-bottom:
+        1px solid rgba(251,191,36,0.12);
+}
+
+.nav-logo {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #FBBF24;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 26px;
+}
+
+.nav-links a {
+    color: #CBD5E1;
+    text-decoration: none;
+    font-weight: 700;
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.nav-links a:hover {
+    color: #FBBF24;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 14px;
+        padding: 18px;
+    }
+
+    .nav-links {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+}
+
+/* EMERGENCY LAYOUT RESET */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    padding: 0;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.hero-section {
+    margin: 0 0 40px 0;
+}
+
+.fight-night-hero,
+.command-center,
+#comparison-results,
+#fighters-container {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#fighters-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.fighter-card {
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.fighter-image-container {
+    width: 100%;
+}
+/* HARD LAYOUT OVERRIDE */
+
+body {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+}
+
+.navbar {
+    position: sticky !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.hero-section {
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 70px 20px 60px !important;
+}
+
+.fight-night-hero,
+.command-center,
+#comparison-results,
+#fighters-container {
+    width: min(1200px, calc(100% - 40px)) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+#fighters-container {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 24px !important;
+}
+
+.fighter-card {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+.site-footer {
+    margin-top: 80px;
+    padding: 50px 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(5,8,22,0.95),
+            rgba(2,6,15,1)
+        );
+
+    border-top:
+        1px solid rgba(251,191,36,0.12);
+
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.site-footer h3 {
+    color: #FBBF24;
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.site-footer p {
+    color: #94A3B8;
+    line-height: 1.7;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+
+    margin: 24px 0;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #CBD5E1;
+    text-decoration: none;
+    font-weight: 700;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.footer-links a:hover {
+    color: #FBBF24;
+    transform: translateY(-2px);
+}
+
+.footer-copy {
+    margin-top: 24px;
+    font-size: 0.9rem;
+    color: #64748B;
+}
+/* Fix Hero Scaling */
+@media (max-width: 700px) {
+
+    .hero-section {
+        padding: 60px 20px 40px;
+        min-height: auto;
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+        line-height: 1;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-kicker {
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+    }
+
+}
+/* Improve Fighter Cards on Mobile */
+@media (max-width: 700px) {
+
+    #fighters-container {
+        grid-template-columns: 1fr;
+        width: calc(100% - 24px) !important;
+    }
+
+    .fighter-image-container {
+        height: 420px;
+    }
+
+    .fighter-name {
+        font-size: 1.3rem;
+    }
+
+}
+/* Improve Comparison Arena */
+@media (max-width: 700px) {
+
+    .comparison-card {
+        padding: 18px;
+    }
+
+    .arena-title {
+        font-size: 2rem;
+    }
+
+    .comparison-image {
+        width: 130px;
+        height: 130px;
+    }
+
+    .vs-text {
+        font-size: 1.4rem;
+    }
+
+    .comparison-table {
+        font-size: 0.9rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 8px;
+    }
+
+}
+/* Fix Footer Mobile Layout */
+@media (max-width: 700px) {
+
+    .footer-links {
+        gap: 16px;
+    }
+
+    .site-footer h3 {
+        font-size: 1.6rem;
+    }
+
+}
+/* smooth section reveal */
+.fade-section {
+    opacity: 0;
+    transform: translateY(24px);
+
+    animation:
+        fadeSection 0.8s ease forwards;
+}
+/* Premium Scrollbar */
+@keyframes fadeSection {
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0B1020;
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            180deg,
+            #FBBF24,
+            #F59E0B
+        );
+
+    border-radius: 999px;
 }
