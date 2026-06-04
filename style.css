@@ -1402,3 +1402,257 @@ body {
     }
 
 }
+.combat-dna {
+    margin-top: 28px;
+    padding: 22px;
+    border-radius: 22px;
+    background: linear-gradient(
+        135deg,
+        rgba(17,24,39,0.92),
+        rgba(11,16,32,0.96)
+    );
+    border: 1px solid rgba(251,191,36,0.12);
+}
+
+.combat-dna h3 {
+    color: #FBBF24;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.dna-styles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.dna-style {
+    padding: 12px 18px;
+    border-radius: 999px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.primary-style {
+    background: linear-gradient(
+        135deg,
+        rgba(251,191,36,0.22),
+        rgba(245,158,11,0.15)
+    );
+    color: #FBBF24;
+    border: 1px solid rgba(251,191,36,0.22);
+}
+
+.secondary-style {
+    background: rgba(148,163,184,0.08);
+    color: #CBD5E1;
+    border: 1px solid rgba(148,163,184,0.12);
+}
+
+.dna-traits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dna-trait {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    color: #94A3B8;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.comparison-dna-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.comparison-dna-grid h4 {
+    color: #F8FAFC;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 700px) {
+    .comparison-dna-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.style-interaction-box {
+    margin-top: 24px;
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(251,191,36,0.08),
+            rgba(11,16,32,0.96)
+        );
+
+    border:
+        1px solid rgba(251,191,36,0.16);
+}
+
+.style-interaction-box h3 {
+    color: #FBBF24;
+    margin-bottom: 12px;
+}
+
+.style-interaction-box p {
+    color: #CBD5E1;
+    line-height: 1.7;
+}
+.fight-narrative-box {
+    margin-top: 24px;
+
+    padding: 24px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30,41,59,0.92),
+            rgba(11,16,32,0.96)
+        );
+
+    border:
+        1px solid rgba(148,163,184,0.14);
+}
+
+.fight-narrative-box h3 {
+    color: #FBBF24;
+
+    margin-bottom: 14px;
+}
+
+.fight-narrative-box p {
+    color: #CBD5E1;
+
+    line-height: 1.8;
+}.fight-narrative-box {
+    margin-top: 24px;
+
+    padding: 24px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30,41,59,0.92),
+            rgba(11,16,32,0.96)
+        );
+
+    border:
+        1px solid rgba(148,163,184,0.14);
+}
+
+.fight-narrative-box h3 {
+    color: #FBBF24;
+
+    margin-bottom: 14px;
+}
+
+.fight-narrative-box p {
+    color: #CBD5E1;
+
+    line-height: 1.8;
+}
+.volatility-box {
+    margin-top: 24px;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(127,29,29,0.18),
+            rgba(11,16,32,0.96)
+        );
+
+    border:
+        1px solid rgba(239,68,68,0.18);
+
+    text-align: center;
+}
+
+.volatility-box h3 {
+    color: #F87171;
+
+    margin-bottom: 12px;
+}
+
+.volatility-box p {
+    color: #FCA5A5;
+
+    font-size: 1.1rem;
+
+    font-weight: 700;
+}
+.historical-insight-box {
+    margin-top: 24px;
+
+    padding: 24px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20,83,45,0.18),
+            rgba(11,16,32,0.96)
+        );
+
+    border:
+        1px solid rgba(34,197,94,0.18);
+}
+
+.historical-insight-box h3 {
+    color: #4ADE80;
+
+    margin-bottom: 14px;
+}
+
+.historical-insight-box p {
+    color: #DCFCE7;
+
+    line-height: 1.8;
+}
+.meta-insight-box {
+    margin-top: 24px;
+
+    padding: 24px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30,64,175,0.18),
+            rgba(11,16,32,0.96)
+        );
+
+    border:
+        1px solid rgba(96,165,250,0.18);
+}
+
+.meta-insight-box h3 {
+    color: #60A5FA;
+
+    margin-bottom: 14px;
+}
+
+.meta-insight-box p {
+    color: #DBEAFE;
+
+    line-height: 1.8;
+}

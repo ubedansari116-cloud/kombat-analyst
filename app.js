@@ -175,7 +175,305 @@ function calculateFighterScore(fighter) {
     Number(fighter.head_defense) * 0.05
   );
 }
+function generateMetaInsight(
+  fighterA,
+  fighterB
+) {
 
+  let metaInsight = "";
+
+  // Wrestler dominance
+
+  if (
+    fighterA.primary_style.includes("Wrestler") ||
+    fighterB.primary_style.includes("Wrestler")
+  ) {
+
+    metaInsight =
+      `Modern MMA has increasingly rewarded layered wrestling pressure, positional control, and pace management. Fighters capable of blending grappling with sustained pressure often shape the tempo of elite-level matchups.`;
+
+  }
+
+  // Well-rounded evolution
+
+  else if (
+    fighterA.primary_style ===
+      "Well Rounded MMA Fighter" ||
+
+    fighterB.primary_style ===
+      "Well Rounded MMA Fighter"
+  ) {
+
+    metaInsight =
+      `Modern championship-level MMA increasingly favors adaptable fighters capable of transitioning between striking, wrestling, and grappling without major weaknesses across phases of combat.`;
+
+  }
+
+  // Pressure fighting evolution
+
+  else if (
+    fighterA.primary_style.includes("Pressure") ||
+    fighterB.primary_style.includes("Pressure")
+  ) {
+
+    metaInsight =
+      `Aggressive pressure systems have become increasingly effective in modern MMA by disrupting rhythm, forcing defensive reactions, and limiting opponent comfort over extended exchanges.`;
+
+  }
+
+  // Generic fallback
+
+  else {
+
+    metaInsight =
+      `Elite MMA continues evolving toward layered adaptability, strategic pacing, and fighters capable of managing multiple combat ranges under pressure.`;
+
+  }
+
+  return metaInsight;
+
+}
+function generateHistoricalInsight(
+  fighterA,
+  fighterB
+) {
+
+  let insight = "";
+
+  // Wrestlers vs Distance Strikers
+
+  if (
+    fighterA.primary_style.includes("Wrestler") &&
+    fighterB.primary_style === "Distance Striker"
+  ) {
+
+    insight =
+      `Historically, pressure-based wrestling archetypes have performed strongly against distance strikers by reducing space, forcing defensive reactions, and controlling positioning over time.`;
+
+  }
+
+  else if (
+    fighterB.primary_style.includes("Wrestler") &&
+    fighterA.primary_style === "Distance Striker"
+  ) {
+
+    insight =
+      `Historically, pressure-based wrestling archetypes have performed strongly against distance strikers by reducing space, forcing defensive reactions, and controlling positioning over time.`;
+
+  }
+
+  // Submission Hunter vs Wrestler
+
+  else if (
+    fighterA.primary_style === "Submission Hunter" &&
+    fighterB.primary_style.includes("Wrestler")
+  ) {
+
+    insight =
+      `Historically, aggressive wrestlers entering prolonged grappling exchanges against submission specialists can become vulnerable during scrambles and transitional positions.`;
+
+  }
+
+  else if (
+    fighterB.primary_style === "Submission Hunter" &&
+    fighterA.primary_style.includes("Wrestler")
+  ) {
+
+    insight =
+      `Historically, aggressive wrestlers entering prolonged grappling exchanges against submission specialists can become vulnerable during scrambles and transitional positions.`;
+
+  }
+
+  // Kickboxer vs Pressure
+
+  else if (
+    fighterA.primary_style === "Kickboxer" &&
+    fighterB.primary_style.includes("Pressure")
+  ) {
+
+    insight =
+      `Historically, kickboxers facing sustained forward pressure often struggle once forced toward the cage and denied kicking range.`;
+
+  }
+
+  else if (
+    fighterB.primary_style === "Kickboxer" &&
+    fighterA.primary_style.includes("Pressure")
+  ) {
+
+    insight =
+      `Historically, kickboxers facing sustained forward pressure often struggle once forced toward the cage and denied kicking range.`;
+
+  }
+
+  // Generic fallback
+
+  else {
+
+    insight =
+      `Historically, matchups between layered MMA archetypes are often decided by adaptability, momentum shifts, and which fighter successfully imposes their preferred pace and positioning.`;
+
+  }
+
+  return insight;
+
+}
+function calculateFightVolatility(
+  fighterA,
+  fighterB
+) {
+
+  let volatilityScore = 0;
+
+  const allTraits = [
+    fighterA.trait_1,
+    fighterA.trait_2,
+    fighterA.trait_3,
+    fighterB.trait_1,
+    fighterB.trait_2,
+    fighterB.trait_3
+  ];
+
+  // Explosive fighters increase volatility
+
+  volatilityScore +=
+    allTraits.filter(
+      trait => trait === "Explosive"
+    ).length * 3;
+
+  // Aggressive fighters increase chaos
+
+  volatilityScore +=
+    allTraits.filter(
+      trait => trait === "Aggressive"
+    ).length * 2;
+
+  // Chaos Fighters massively increase volatility
+
+  volatilityScore +=
+    allTraits.filter(
+      trait => trait === "Chaos Fighter"
+    ).length * 4;
+
+  // Counter-heavy matchups create danger
+
+  volatilityScore +=
+    allTraits.filter(
+      trait => trait === "Counter Heavy"
+    ).length * 2;
+
+  let volatilityDescription = "";
+
+  if (volatilityScore >= 12) {
+
+    volatilityDescription =
+      `Both fighters bring explosive finishing potential and aggressive momentum swings into this matchup. Defensive mistakes could rapidly change the direction of the fight, especially during early exchanges and pressure sequences.`;
+
+  }
+
+  else if (volatilityScore >= 8) {
+
+    volatilityDescription =
+      `This matchup carries significant momentum-shift potential due to pressure, counter danger, and finishing threats. Small openings may quickly escalate into dangerous exchanges.`;
+
+  }
+
+  else if (volatilityScore >= 4) {
+
+    volatilityDescription =
+      `The matchup contains measured danger moments, particularly during transitions and pressure exchanges, though overall pacing may remain relatively controlled.`;
+
+  }
+
+  else {
+
+    volatilityDescription =
+      `This matchup is likely to develop through calculated exchanges, positional control, and tactical pacing rather than chaotic momentum swings.`;
+
+  }
+
+  return {
+    volatilityScore,
+    volatilityDescription
+  };
+
+}
+function generateFightNarrative(
+  fighterA,
+  fighterB
+) {
+
+  let narrative = "";
+
+  // Pressure vs Distance
+
+  if (
+    fighterA.primary_style === "Pressure Wrestler" &&
+    fighterB.primary_style === "Distance Striker"
+  ) {
+
+    narrative =
+      `${fighterA.name} will likely attempt to collapse distance early, forcing ${fighterB.name} into defensive reactions and grappling exchanges. If ${fighterB.name} cannot maintain range and lateral movement, sustained cage pressure may begin draining cardio and reducing striking rhythm.`;
+
+  }
+
+  // Counter vs Pressure
+
+  else if (
+    fighterA.primary_style === "Counter Striker" &&
+    fighterB.primary_style === "Pressure Boxer"
+  ) {
+
+    narrative =
+      `${fighterB.name}'s forward pressure creates opportunities for ${fighterA.name}'s counter timing. Early exchanges may become dangerous if aggressive entries are punished cleanly during pocket exchanges.`;
+
+  }
+
+  // Submission danger
+
+  else if (
+    fighterA.primary_style === "Submission Hunter" &&
+    fighterB.primary_style.includes("Wrestler")
+  ) {
+
+    narrative =
+      `${fighterB.name} may control wrestling exchanges early, but prolonged grappling sequences create constant submission danger from ${fighterA.name}. Scrambles and transitions could rapidly shift momentum.`;
+
+  }
+
+  // Kickboxer vs Wrestler
+
+else if (
+  fighterA.primary_style === "Kickboxer" &&
+  fighterB.primary_style.includes("Wrestler")
+) {
+
+  narrative =
+    `${fighterA.name} will likely try to maintain kicking range and punish entries, while ${fighterB.name} pressures forward searching for clinch control, takedowns, and top-position sequences. The key battle is whether ${fighterA.name} can keep the fight at striking distance before wrestling pressure changes the rhythm.`;
+
+}
+
+else if (
+  fighterB.primary_style === "Kickboxer" &&
+  fighterA.primary_style.includes("Wrestler")
+) {
+
+  narrative =
+    `${fighterB.name} will likely try to maintain kicking range and punish entries, while ${fighterA.name} pressures forward searching for clinch control, takedowns, and top-position sequences. The key battle is whether ${fighterB.name} can keep the fight at striking distance before wrestling pressure changes the rhythm.`;
+
+}
+  // Generic fallback
+
+  else {
+
+    narrative =
+      `${fighterA.name} and ${fighterB.name} bring contrasting combat approaches shaped by pressure, pace, timing, and defensive reactions. Small momentum swings could heavily influence how the matchup develops over time.`;
+
+  }
+
+  return narrative;
+
+}
 function generateFightVerdict(fighterA, fighterB, overallEdge) {
   let verdict = "";
 
@@ -214,6 +512,228 @@ function generateFightVerdict(fighterA, fighterB, overallEdge) {
   }
 
   return verdict;
+}
+function calculateTraitAdvantage(
+  fighterA,
+  fighterB
+) {
+
+  let fighterATraitEdge = 0;
+  let fighterBTraitEdge = 0;
+
+  const fighterATraits = [
+    fighterA.trait_1,
+    fighterA.trait_2,
+    fighterA.trait_3
+  ];
+
+  const fighterBTraits = [
+    fighterB.trait_1,
+    fighterB.trait_2,
+    fighterB.trait_3
+  ];
+
+  // Explosive fighters increase danger
+
+  if (
+    fighterATraits.includes("Explosive")
+  ) {
+    fighterATraitEdge += 3;
+  }
+
+  if (
+    fighterBTraits.includes("Explosive")
+  ) {
+    fighterBTraitEdge += 3;
+  }
+
+  // Durable fighters survive pressure better
+
+  if (
+    fighterATraits.includes("Durable")
+  ) {
+    fighterATraitEdge += 2;
+  }
+
+  if (
+    fighterBTraits.includes("Durable")
+  ) {
+    fighterBTraitEdge += 2;
+  }
+
+  // Pressure Heavy helps overwhelm distance styles
+
+  if (
+    fighterATraits.includes("Pressure Heavy") &&
+    fighterB.primary_style === "Distance Striker"
+  ) {
+    fighterATraitEdge += 3;
+  }
+
+  if (
+    fighterBTraits.includes("Pressure Heavy") &&
+    fighterA.primary_style === "Distance Striker"
+  ) {
+    fighterBTraitEdge += 3;
+  }
+
+  // Counter Heavy helps against aggressive pressure
+
+  if (
+    fighterATraits.includes("Counter Heavy") &&
+    fighterBTraits.includes("Aggressive")
+  ) {
+    fighterATraitEdge += 3;
+  }
+
+  if (
+    fighterBTraits.includes("Counter Heavy") &&
+    fighterATraits.includes("Aggressive")
+  ) {
+    fighterBTraitEdge += 3;
+  }
+
+  // High Pace pressures low-output fighters
+
+  if (
+    fighterATraits.includes("High Pace") &&
+    fighterBTraits.includes("Low Output")
+  ) {
+    fighterATraitEdge += 4;
+  }
+
+  if (
+    fighterBTraits.includes("High Pace") &&
+    fighterATraits.includes("Low Output")
+  ) {
+    fighterBTraitEdge += 4;
+  }
+
+  return {
+    fighterATraitEdge,
+    fighterBTraitEdge
+  };
+
+}
+function calculateStyleAdvantage(
+  fighterA,
+  fighterB
+) {
+
+  let fighterAStyleEdge = 0;
+  let fighterBStyleEdge = 0;
+
+  const styleA =
+    fighterA.primary_style;
+
+  const styleB =
+    fighterB.primary_style;
+
+  if (
+    styleA === "Pressure Wrestler" &&
+    styleB === "Distance Striker"
+  ) {
+    fighterAStyleEdge += 8;
+  }
+
+  else if (
+    styleB === "Pressure Wrestler" &&
+    styleA === "Distance Striker"
+  ) {
+    fighterBStyleEdge += 8;
+  }
+
+  if (
+    styleA === "Counter Striker" &&
+    styleB === "Pressure Boxer"
+  ) {
+    fighterAStyleEdge += 6;
+  }
+
+  else if (
+    styleB === "Counter Striker" &&
+    styleA === "Pressure Boxer"
+  ) {
+    fighterBStyleEdge += 6;
+  }
+
+  if (
+    styleA === "Submission Hunter" &&
+    styleB.includes("Wrestler")
+  ) {
+    fighterAStyleEdge += 5;
+  }
+
+  else if (
+    styleB === "Submission Hunter" &&
+    styleA.includes("Wrestler")
+  ) {
+    fighterBStyleEdge += 5;
+  }
+
+  if (
+    styleA === "Kickboxer" &&
+    styleB.includes("Wrestler")
+  ) {
+    fighterBStyleEdge += 7;
+  }
+
+  else if (
+    styleB === "Kickboxer" &&
+    styleA.includes("Wrestler")
+  ) {
+    fighterAStyleEdge += 7;
+  }
+
+  return {
+    fighterAStyleEdge,
+    fighterBStyleEdge
+  };
+
+}
+function generateStyleInteraction(fighterA, fighterB) {
+  const styleA = fighterA.primary_style;
+  const styleB = fighterB.primary_style;
+
+  let summary = "";
+
+  if (styleA === "Pressure Wrestler" && styleB === "Distance Striker") {
+    summary = `${fighterA.name}'s pressure wrestling is naturally built to collapse distance, deny space, and force ${fighterB.name} into defensive grappling exchanges.`;
+  }
+
+  else if (styleA === "Distance Striker" && styleB === "Pressure Wrestler") {
+    summary = `${fighterB.name}'s pressure wrestling naturally threatens ${fighterA.name}'s distance striking by forcing entries, cage pressure, and takedown defense reactions.`;
+  }
+
+  else if (styleA === "Counter Striker" && styleB === "Pressure Boxer") {
+    summary = `${fighterA.name}'s counter striking can punish ${fighterB.name}'s forward pressure if timing and range control are maintained.`;
+  }
+
+  else if (styleA === "Pressure Boxer" && styleB === "Counter Striker") {
+    summary = `${fighterB.name}'s counter striking creates danger when ${fighterA.name} enters the pocket, but ${fighterA.name}'s pressure can reduce reaction time and force exchanges.`;
+  }
+
+  else if (styleA === "Submission Hunter" && styleB.includes("Wrestler")) {
+    summary = `${fighterA.name}'s submission threat creates danger in grappling exchanges, especially if ${fighterB.name} overcommits during takedown or top-control sequences.`;
+  }
+
+  else if (styleB === "Submission Hunter" && styleA.includes("Wrestler")) {
+    summary = `${fighterB.name}'s submission threat makes grappling exchanges dangerous, even if ${fighterA.name} controls wrestling pressure and top position.`;
+  }
+
+  else if (styleA === "Kickboxer" && styleB.includes("Wrestler")) {
+    summary = `${fighterB.name}'s wrestling threat can disrupt ${fighterA.name}'s kickboxing rhythm by forcing stance changes, defensive reactions, and clinch awareness.`;
+  }
+
+  else if (styleB === "Kickboxer" && styleA.includes("Wrestler")) {
+    summary = `${fighterA.name}'s wrestling threat can disrupt ${fighterB.name}'s kickboxing rhythm by forcing defensive grappling reactions.`;
+  }
+
+  else {
+    summary = `${fighterA.name}'s ${fighterA.primary_style} and ${fighterA.secondary_style} profile clashes with ${fighterB.name}'s ${fighterB.primary_style} and ${fighterB.secondary_style} profile in a matchup shaped by pace, range, pressure, and defensive reactions.`;
+  }
+
+  return summary;
 }
 
 function compareFighters() {
@@ -265,8 +785,33 @@ function compareFighters() {
   if (fighterAWins > fighterBWins) overallEdge = fighterA.name;
   if (fighterBWins > fighterAWins) overallEdge = fighterB.name;
 
-  const fighterAScore = calculateFighterScore(fighterA);
-  const fighterBScore = calculateFighterScore(fighterB);
+const baseFighterAScore =
+  calculateFighterScore(fighterA);
+
+const baseFighterBScore =
+  calculateFighterScore(fighterB);
+
+const styleAdvantages =
+  calculateStyleAdvantage(
+    fighterA,
+    fighterB
+  );
+
+const traitAdvantages =
+  calculateTraitAdvantage(
+    fighterA,
+    fighterB
+  );
+
+const fighterAScore =
+  baseFighterAScore +
+  styleAdvantages.fighterAStyleEdge +
+  traitAdvantages.fighterATraitEdge;
+
+const fighterBScore =
+  baseFighterBScore +
+  styleAdvantages.fighterBStyleEdge +
+  traitAdvantages.fighterBTraitEdge;
   const totalScore = fighterAScore + fighterBScore;
 
   const fighterAProbability = ((fighterAScore / totalScore) * 100).toFixed(1);
@@ -277,7 +822,28 @@ function compareFighters() {
     fighterB,
     overallEdge
   );
-
+  const fightNarrative =
+  generateFightNarrative(
+    fighterA,
+    fighterB
+  );
+  const volatilityData =
+  calculateFightVolatility(
+    fighterA,
+    fighterB
+  );
+  const historicalInsight =
+  generateHistoricalInsight(
+    fighterA,
+    fighterB
+  );
+  const metaInsight =
+  generateMetaInsight(
+    fighterA,
+    fighterB
+  );
+const styleInteraction =
+  generateStyleInteraction(fighterA, fighterB);
   results.innerHTML = `
     <div class="comparison-card">
 
@@ -351,19 +917,151 @@ function compareFighters() {
         <h3>Advantages</h3>
 
         ${advantages.map((item) => `<p>✓ ${item}</p>`).join("")}
-
-      </div>
-
-      <div class="analysis-box">
-
-        <h3>Smart Fight Verdict</h3>
-
         <p>
-          ${fightVerdict}
-        </p>
+  ⚔️ Style Edge:
+  ${styleAdvantages.fighterAStyleEdge >
+  styleAdvantages.fighterBStyleEdge
+
+    ? fighterA.name
+
+    : styleAdvantages.fighterBStyleEdge >
+      styleAdvantages.fighterAStyleEdge
+
+    ? fighterB.name
+
+    : "Even"}
+</p>
+<p>
+    🧬 Trait Edge:
+    ${traitAdvantages.fighterATraitEdge >
+    traitAdvantages.fighterBTraitEdge
+
+      ? fighterA.name
+
+      : traitAdvantages.fighterBTraitEdge >
+        traitAdvantages.fighterATraitEdge
+
+      ? fighterB.name
+
+      : "Even"}
+  </p>
+
 
       </div>
 
+      <div class="combat-dna">
+
+        <h3>Combat DNA</h3>
+
+        <div class="comparison-dna-grid">
+
+          <div>
+            <h4>${fighterA.name}</h4>
+
+            <div class="dna-styles">
+
+              <span class="dna-style primary-style">
+                ${fighterA.primary_style}
+              </span>
+
+              <span class="dna-style secondary-style">
+                ${fighterA.secondary_style}
+              </span>
+
+            </div>
+
+            <div class="dna-traits">
+
+              <span class="dna-trait">${fighterA.trait_1}</span>
+              <span class="dna-trait">${fighterA.trait_2}</span>
+              <span class="dna-trait">${fighterA.trait_3}</span>
+
+            </div>
+          </div>
+
+          <div>
+            <h4>${fighterB.name}</h4>
+
+            <div class="dna-styles">
+
+              <span class="dna-style primary-style">
+                ${fighterB.primary_style}
+              </span>
+
+              <span class="dna-style secondary-style">
+                ${fighterB.secondary_style}
+              </span>
+
+            </div>
+
+            <div class="dna-traits">
+
+              <span class="dna-trait">${fighterB.trait_1}</span>
+              <span class="dna-trait">${fighterB.trait_2}</span>
+              <span class="dna-trait">${fighterB.trait_3}</span>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="style-interaction-box">
+
+  <h3>Style Interaction</h3>
+
+  <p>
+    ${styleInteraction}
+  </p>
+
+</div>
+
+<div class="fight-narrative-box">
+
+  <h3>Matchup Narrative</h3>
+
+  <p>
+    ${fightNarrative}
+  </p>
+
+</div>
+
+<div class="volatility-box">
+
+  <h3>Fight Volatility</h3>
+
+  <p>
+    ${volatilityData.volatilityDescription}
+  </p>
+
+</div>
+<div class="historical-insight-box">
+
+  <h3>Historical Matchup Insight</h3>
+
+  <p>
+    ${historicalInsight}
+  </p>
+
+</div>
+<div class="meta-insight-box">
+
+  <h3>Modern MMA Meta Insight</h3>
+
+  <p>
+    ${metaInsight}
+  </p>
+
+</div>
+<div class="analysis-box">
+
+  <h3>Smart Fight Verdict</h3>
+
+  <p>
+    ${fightVerdict}
+  </p>
+
+</div>
       <table class="comparison-table">
 
         <tr>
