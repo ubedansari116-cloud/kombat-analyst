@@ -449,6 +449,15 @@ h1 {
 #fighter-count {
     color: #FBBF24;
     font-weight: 700;
+
+    text-align: center;
+
+    margin:
+        12px auto 30px auto;
+
+    display: block;
+
+    width: fit-content;
 }
 .command-center {
     max-width: 1000px;
@@ -1233,4 +1242,151 @@ body {
         );
 
     border-radius: 999px;
+}
+/* Mobile Search Bar Fix*/
+@media (max-width: 700px) {
+
+    .command-center #search-input {
+        width: 100%;
+        max-width: 100%;
+
+        padding: 14px 18px;
+
+        font-size: 1rem;
+
+        margin-bottom: 14px;
+    }
+
+    #fighter-count {
+        text-align: center;
+        margin-bottom: 26px;
+        font-size: 0.95rem;
+    }
+
+}
+ .back-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 24px;
+    z-index: 2000;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+    border: 1px solid rgba(251,191,36,0.25);
+
+    background: linear-gradient(135deg, #FBBF24, #F59E0B);
+    color: #111827;
+
+    font-size: 1.4rem;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.35),
+        0 0 20px rgba(251,191,36,0.25);
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+}
+.back-to-top {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.empty-state {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(17,24,39,0.92),
+            rgba(11,16,32,0.95)
+        );
+
+    border:
+        1px solid rgba(251,191,36,0.12);
+
+    border-radius: 24px;
+}
+
+.empty-state h2 {
+    color: #FBBF24;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #94A3B8;
+}
+.comparison-placeholder {
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(17,24,39,0.92),
+            rgba(11,16,32,0.96)
+        );
+
+    border:
+        1px solid rgba(251,191,36,0.12);
+
+    border-radius: 24px;
+}
+
+.comparison-placeholder h2 {
+    color: #FBBF24;
+    margin-bottom: 12px;
+}
+
+.comparison-placeholder p {
+    color: #94A3B8;
+}
+.skeleton-card {
+    height: 480px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(17,24,39,0.9) 25%,
+            rgba(30,41,59,0.95) 50%,
+            rgba(17,24,39,0.9) 75%
+        );
+
+    background-size: 200% 100%;
+
+    animation:
+        skeletonLoading 1.4s infinite linear;
+}
+
+@keyframes skeletonLoading {
+
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+
 }

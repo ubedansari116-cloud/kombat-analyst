@@ -22,7 +22,22 @@ function displayFighters(fighters) {
 
   countElement.textContent = `${fighters.length} fighters found`;
   container.innerHTML = "";
+if (fighters.length === 0) {
 
+  container.innerHTML = `
+    <div class="empty-state">
+
+      <h2>No Fighters Found</h2>
+
+      <p>
+        Try searching another fighter.
+      </p>
+
+    </div>
+  `;
+
+  return;
+}
   fighters.forEach((fighter) => {
     const card = document.createElement("div");
     card.classList.add("fighter-card");
@@ -453,3 +468,15 @@ document.addEventListener(
     }
   }
 );
+window.addEventListener("scroll", () => {
+  const backToTop =
+    document.getElementById("back-to-top");
+
+  if (!backToTop) return;
+
+  if (window.scrollY > 500) {
+    backToTop.classList.add("show");
+  } else {
+    backToTop.classList.remove("show");
+  }
+});
