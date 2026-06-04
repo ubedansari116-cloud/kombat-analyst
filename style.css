@@ -1390,3 +1390,15 @@ body {
     }
 
 }
+@media (max-width: 700px) {
+
+    .command-center #search-input,
+    #search-input {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        box-sizing: border-box !important;
+    }
+
+}

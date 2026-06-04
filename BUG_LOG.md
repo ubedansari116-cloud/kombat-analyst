@@ -115,3 +115,22 @@ A back-to-top button is only useful after scrolling.
 
 **Lesson:**  
 Floating UI should appear only when contextually useful.
+
+---
+
+## 7. Mobile Search Bar Overflow Bug
+
+**Bug:**  
+The search bar extended outside the Command Center container on mobile devices.
+
+**Cause:**  
+A global CSS rule forced the search input to maintain `min-width: 300px`, which prevented it from shrinking properly on smaller screens.
+
+**Fix:**  
+Added a mobile-specific override:
+
+**Why this fix:**  
+`min-width: 0` releases the forced width constraint, allowing the search bar to scale correctly inside the mobile container.
+
+**Lesson:**  
+Global minimum widths can silently break responsive layouts. Mobile-specific overrides are often necessary for proper scaling.
