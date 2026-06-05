@@ -175,6 +175,441 @@ function calculateFighterScore(fighter) {
     Number(fighter.head_defense) * 0.05
   );
 }
+function generateMomentumDynamics(
+  fighterA,
+  fighterB
+) {
+
+  let momentumNarrative = "";
+
+  const fighterATraits = [
+    fighterA.trait_1,
+    fighterA.trait_2,
+    fighterA.trait_3
+  ];
+
+  const fighterBTraits = [
+    fighterB.trait_1,
+    fighterB.trait_2,
+    fighterB.trait_3
+  ];
+
+  // Aggressive momentum shifts
+
+  if (
+    fighterATraits.includes("Aggressive") ||
+    fighterBTraits.includes("Aggressive")
+  ) {
+
+    momentumNarrative +=
+      `Aggressive pressure sequences could rapidly shift momentum through damage accumulation and forced defensive reactions. `;
+
+  }
+
+  // Counter momentum danger
+
+  if (
+    fighterATraits.includes("Counter Heavy") ||
+    fighterBTraits.includes("Counter Heavy")
+  ) {
+
+    momentumNarrative +=
+      `Counter opportunities may dramatically alter momentum if entries become reckless during pressure exchanges. `;
+
+  }
+
+  // Chaos creates unstable momentum
+
+  if (
+    fighterATraits.includes("Chaos Fighter") ||
+    fighterBTraits.includes("Chaos Fighter")
+  ) {
+
+    momentumNarrative +=
+      `Chaotic exchanges and transitional scrambles may create unpredictable momentum swings throughout the fight. `;
+
+  }
+
+  // High pace overwhelms over time
+
+  if (
+    fighterATraits.includes("High Pace") ||
+    fighterBTraits.includes("High Pace")
+  ) {
+
+    momentumNarrative +=
+      `Sustained pace pressure may gradually force defensive deterioration and shift control over extended rounds. `;
+
+  }
+
+  // fallback
+
+  if (momentumNarrative === "") {
+
+    momentumNarrative =
+      `Momentum may shift gradually through tactical adjustments, positional control, and accumulated pressure over time.`;
+
+  }
+
+  return momentumNarrative;
+
+}
+function generateUpsetPotential(
+  fighterA,
+  fighterB
+) {
+
+  let upsetNarrative = "";
+
+  const fighterATraits = [
+    fighterA.trait_1,
+    fighterA.trait_2,
+    fighterA.trait_3
+  ];
+
+  const fighterBTraits = [
+    fighterB.trait_1,
+    fighterB.trait_2,
+    fighterB.trait_3
+  ];
+
+  let upsetDanger = 0;
+
+  // Explosive danger
+
+  upsetDanger +=
+    fighterATraits.filter(
+      trait => trait === "Explosive"
+    ).length * 3;
+
+  upsetDanger +=
+    fighterBTraits.filter(
+      trait => trait === "Explosive"
+    ).length * 3;
+
+  // Counter danger
+
+  upsetDanger +=
+    fighterATraits.filter(
+      trait => trait === "Counter Heavy"
+    ).length * 2;
+
+  upsetDanger +=
+    fighterBTraits.filter(
+      trait => trait === "Counter Heavy"
+    ).length * 2;
+
+  // Submission threat
+
+  if (
+    fighterA.primary_style === "Submission Hunter"
+  ) {
+    upsetDanger += 4;
+  }
+
+  if (
+    fighterB.primary_style === "Submission Hunter"
+  ) {
+    upsetDanger += 4;
+  }
+
+  // Chaos fighters increase unpredictability
+
+  upsetDanger +=
+    fighterATraits.filter(
+      trait => trait === "Chaos Fighter"
+    ).length * 3;
+
+  upsetDanger +=
+    fighterBTraits.filter(
+      trait => trait === "Chaos Fighter"
+    ).length * 3;
+
+  // Narrative generation
+
+  if (upsetDanger >= 14) {
+
+    upsetNarrative =
+      `Despite statistical advantages elsewhere, this matchup contains serious upset potential due to explosive offense, counter danger, and sudden momentum-shift opportunities.`;
+
+  }
+
+  else if (upsetDanger >= 9) {
+
+    upsetNarrative =
+      `The matchup contains meaningful upset pathways through counters, scrambles, pressure exchanges, or sudden finishing sequences.`;
+
+  }
+
+  else if (upsetDanger >= 5) {
+
+    upsetNarrative =
+      `While the matchup may appear controlled on paper, isolated momentum swings or positional mistakes could still create dangerous upset scenarios.`;
+
+  }
+
+  else {
+
+    upsetNarrative =
+      `The matchup appears relatively stable stylistically, with fewer sudden momentum-shift pathways likely to dramatically alter the expected fight trajectory.`;
+
+  }
+
+  return upsetNarrative;
+
+}
+function generateFinishProbability(
+  fighterA,
+  fighterB
+) {
+
+  let finishNarrative = "";
+
+  const fighterATraits = [
+    fighterA.trait_1,
+    fighterA.trait_2,
+    fighterA.trait_3
+  ];
+
+  const fighterBTraits = [
+    fighterB.trait_1,
+    fighterB.trait_2,
+    fighterB.trait_3
+  ];
+
+  let finishDanger = 0;
+
+  // Explosive danger
+
+  finishDanger +=
+    fighterATraits.filter(
+      trait => trait === "Explosive"
+    ).length * 3;
+
+  finishDanger +=
+    fighterBTraits.filter(
+      trait => trait === "Explosive"
+    ).length * 3;
+
+  // Aggressive danger
+
+  finishDanger +=
+    fighterATraits.filter(
+      trait => trait === "Aggressive"
+    ).length * 2;
+
+  finishDanger +=
+    fighterBTraits.filter(
+      trait => trait === "Aggressive"
+    ).length * 2;
+
+  // Power finishers
+
+  if (
+    fighterA.secondary_style === "Power Finisher"
+  ) {
+    finishDanger += 4;
+  }
+
+  if (
+    fighterB.secondary_style === "Power Finisher"
+  ) {
+    finishDanger += 4;
+  }
+
+  // Submission hunters
+
+  if (
+    fighterA.primary_style === "Submission Hunter"
+  ) {
+    finishDanger += 3;
+  }
+
+  if (
+    fighterB.primary_style === "Submission Hunter"
+  ) {
+    finishDanger += 3;
+  }
+
+  // Narrative generation
+
+  if (finishDanger >= 14) {
+
+    finishNarrative =
+      `This matchup carries extremely high finishing danger due to explosive offense, aggressive exchanges, and multiple fight-ending pathways. Small defensive mistakes could immediately shift the outcome.`;
+
+  }
+
+  else if (finishDanger >= 9) {
+
+    finishNarrative =
+      `Both fighters possess meaningful finishing potential, particularly during momentum swings, pressure exchanges, and transitional sequences.`;
+
+  }
+
+  else if (finishDanger >= 5) {
+
+    finishNarrative =
+      `Finishing opportunities may emerge through accumulated pressure, counters, or positional mistakes, though the matchup may still develop through longer exchanges.`;
+
+  }
+
+  else {
+
+    finishNarrative =
+      `The matchup may lean more toward tactical pacing and controlled exchanges rather than immediate finishing sequences.`;
+
+  }
+
+  return finishNarrative;
+
+}
+function generateCardioDynamics(
+  fighterA,
+  fighterB
+) {
+
+  let cardioNarrative = "";
+
+  const fighterATraits = [
+    fighterA.trait_1,
+    fighterA.trait_2,
+    fighterA.trait_3
+  ];
+
+  const fighterBTraits = [
+    fighterB.trait_1,
+    fighterB.trait_2,
+    fighterB.trait_3
+  ];
+
+  // High pace pressure
+
+  if (
+    fighterATraits.includes("High Pace") ||
+    fighterBTraits.includes("High Pace")
+  ) {
+
+    cardioNarrative +=
+      `Sustained pace and pressure may heavily influence cardio efficiency as the fight progresses. `;
+
+  }
+
+  // Wrestling fatigue
+
+  if (
+    fighterA.primary_style.includes("Wrestler") ||
+    fighterB.primary_style.includes("Wrestler")
+  ) {
+
+    cardioNarrative +=
+      `Extended grappling exchanges and wrestling pressure could gradually drain explosiveness and defensive reactions over multiple rounds. `;
+
+  }
+
+  // Durable fighters survive attrition
+
+  if (
+    fighterATraits.includes("Durable") &&
+    fighterBTraits.includes("Durable")
+  ) {
+
+    cardioNarrative +=
+      `Both fighters possess durability traits that may allow them to remain dangerous even during prolonged attritional sequences. `;
+
+  }
+
+  // fallback
+
+  if (cardioNarrative === "") {
+
+    cardioNarrative =
+      `Cardio management and pacing adjustments may become increasingly important as momentum shifts across rounds.`;
+
+  }
+
+  return cardioNarrative;
+
+}
+function generateRoundDynamics(
+  fighterA,
+  fighterB
+) {
+
+  let dynamics = "";
+
+  const fighterATraits = [
+    fighterA.trait_1,
+    fighterA.trait_2,
+    fighterA.trait_3
+  ];
+
+  const fighterBTraits = [
+    fighterB.trait_1,
+    fighterB.trait_2,
+    fighterB.trait_3
+  ];
+
+  // Explosive early danger
+
+  if (
+    fighterATraits.includes("Explosive") ||
+    fighterBTraits.includes("Explosive")
+  ) {
+
+    dynamics +=
+      `Early rounds may become highly dangerous due to explosive finishing potential and aggressive momentum swings. `;
+
+  }
+
+  // High pace pressure escalation
+
+  if (
+    fighterATraits.includes("High Pace") ||
+    fighterBTraits.includes("High Pace")
+  ) {
+
+    dynamics +=
+      `As the fight progresses, sustained pace and pressure could begin influencing cardio efficiency and defensive reactions. `;
+
+  }
+
+  // Durable attrition warfare
+
+  if (
+    fighterATraits.includes("Durable") &&
+    fighterBTraits.includes("Durable")
+  ) {
+
+    dynamics +=
+      `Both fighters possess durability traits that may allow the matchup to evolve into prolonged attritional exchanges over later rounds. `;
+
+  }
+
+  // Counter-heavy danger
+
+  if (
+    fighterATraits.includes("Counter Heavy") ||
+    fighterBTraits.includes("Counter Heavy")
+  ) {
+
+    dynamics +=
+      `Counter opportunities may become increasingly dangerous as pressure sequences and aggressive entries accumulate. `;
+
+  }
+
+  // Fallback
+
+  if (dynamics === "") {
+
+    dynamics =
+      `The matchup may evolve gradually through positional adjustments, pacing changes, and tactical adaptation across rounds.`;
+
+  }
+
+  return dynamics;
+
+}
 function generateMetaInsight(
   fighterA,
   fighterB
@@ -842,6 +1277,31 @@ const fighterBScore =
     fighterA,
     fighterB
   );
+  const roundDynamics =
+  generateRoundDynamics(
+    fighterA,
+    fighterB
+  );
+  const cardioDynamics =
+  generateCardioDynamics(
+    fighterA,
+    fighterB
+  );
+  const finishProbability =
+  generateFinishProbability(
+    fighterA,
+    fighterB
+  );
+  const upsetPotential =
+  generateUpsetPotential(
+    fighterA,
+    fighterB
+  );
+  const momentumDynamics =
+  generateMomentumDynamics(
+    fighterA,
+    fighterB
+  );
 const styleInteraction =
   generateStyleInteraction(fighterA, fighterB);
   results.innerHTML = `
@@ -1053,6 +1513,52 @@ const styleInteraction =
   </p>
 
 </div>
+<div class="round-dynamics-box">
+
+  <h3>Round Dynamics</h3>
+
+  <p>
+    ${roundDynamics}
+  </p>
+
+</div>
+<div class="cardio-box">
+
+  <h3>Cardio & Pressure Dynamics</h3>
+
+  <p>
+    ${cardioDynamics}
+  </p>
+
+</div>
+<div class="finish-box">
+
+  <h3>Finish Probability</h3>
+
+  <p>
+    ${finishProbability}
+  </p>
+
+</div>
+<div class="upset-box">
+
+  <h3>Upset Potential</h3>
+
+  <p>
+    ${upsetPotential}
+  </p>
+
+</div>
+<div class="momentum-box">
+
+  <h3>Momentum Swing Analysis</h3>
+
+  <p>
+    ${momentumDynamics}
+  </p>
+
+</div>
+
 <div class="analysis-box">
 
   <h3>Smart Fight Verdict</h3>

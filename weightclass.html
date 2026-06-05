@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weight Class</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">Kombat Analyst</div>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#compare-section">Compare</a>
+      <a href="index.html#fighters-container">Fighters</a>
+      <div class="back-button-container">
+  <a href="divisions.html" class="back-button">← Back to Divisions</a>
+</div>
+    </div>
+  </nav>
+
+  <section class="weightclass-hero">
+    <p class="section-kicker">Division Rankings</p>
+    <h1 id="weightclass-title">Loading...</h1>
+    <p id="weightclass-count">Loading fighters...</p>
+  </section>
+
+  <div id="weightclass-fighters"></div>
+
+  <script src="weightclass.js"></script>
+
+</body>
+</html>
