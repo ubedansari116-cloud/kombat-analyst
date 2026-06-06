@@ -15,7 +15,10 @@ function getImageName(fighterName) {
 
   return fighterName.toLowerCase().split(" ")[0];
 }
-
+function getFighterImage(fighter) {
+  return fighter.image_url ||
+    `images/${getImageName(fighter.name)}.jpg`;
+}
 function displayFighters(fighters) {
   const container = document.getElementById("fighters-container");
   const countElement = document.getElementById("fighter-count");
@@ -51,10 +54,10 @@ if (fighters.length === 0) {
     card.innerHTML = `
       <div class="fighter-image-container">
         <img
-          src="images/${imageName}.jpg"
+          src="${getFighterImage(fighter)}"
           alt="${fighter.name}"
           class="fighter-image"
-          onerror="this.src='https://placehold.co/300x300/FF6600/111111?text=${encodeURIComponent(fighter.name)}';"
+          onerror="this.src='https://placehold.co/600x600/111827/FBBF24?text=${encodeURIComponent(fighter.name)}';"
         >
       </div>
 

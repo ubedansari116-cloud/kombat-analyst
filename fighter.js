@@ -13,7 +13,10 @@ function getImageName(fighterName) {
 
   return fighterName.toLowerCase().split(" ")[0];
 }
-
+function getFighterImage(fighter) {
+  return fighter.image_url ||
+    `images/${getImageName(fighter.name)}.jpg`;
+}
 function generateDangerZones(fighter) {
 
   let zones = [];
@@ -623,10 +626,10 @@ async function loadFighter() {
     <div class="cinematic-image-side">
 
       <img
-        src="images/${imageName}.jpg"
+        src="${getFighterImage(data)}"
         alt="${data.name}"
         class="cinematic-fighter-image"
-        onerror="this.src='https://placehold.co/600x600/FF6600/111111?text=${encodeURIComponent(data.name)}';"
+        onerror="this.src='https://placehold.co/600x600/111827/FBBF24?text=${encodeURIComponent(data.name)}';"
       >
 
     </div>
