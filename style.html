@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Style Fighters</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">Kombat Analyst</div>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="divisions.html">Weight Classes</a>
+      <a href="styles.html">Styles</a>
+    </div>
+  </nav>
+
+  <div class="back-button-container">
+    <a href="styles.html" class="back-button">
+      ← Back to Styles
+    </a>
+  </div>
+
+  <section class="weightclass-hero">
+    <p class="section-kicker">Combat Style</p>
+    <h1 id="style-title">Loading...</h1>
+    
+    <p id="style-count">Loading fighters...</p>
+<div class="style-info-box">
+  <h2>Style Doctrine</h2>
+  <p id="style-doctrine"></p>
+</div>
+
+<div class="style-info-box">
+  <h2>Matchup Profile</h2>
+  <p id="style-matchups"></p>
+  <div id="style-attributes" class="style-info-box">
+  <h2>Style Attributes</h2>
+
+  <div class="style-attribute-grid"></div>
+</div>
+</div>
+  </section>
+
+  <div id="style-fighters"></div>
+
+  <script src="style-page.js"></script>
+
+</body>
+</html>
