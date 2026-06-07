@@ -6,31 +6,7 @@ const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY
 );
-const styleDoctrine = {
-  "Pressure Wrestler":
-    "Pressure wrestlers overwhelm opponents through relentless pace, takedowns, cage control and cardio pressure.",
-
-  "Counter Striker":
-    "Counter strikers rely on timing, reads and punishment windows rather than pure aggression.",
-
-  "Kickboxer":
-    "Kickboxers specialize in range control, striking precision and layered offensive setups.",
-
-  "Submission Hunter":
-    "Submission hunters aggressively chase scrambles, transitions and finishing sequences on the ground.",
-
-  "Pressure Boxer":
-    "Pressure boxers weaponize forward movement, attrition and sustained damage accumulation.",
-
-  "Well Rounded MMA Fighter":
-    "Well rounded fighters adapt across striking, wrestling and grappling depending on matchup demands.",
-
-  "Chaos Fighter":
-    "Chaos fighters create unpredictable exchanges, forcing opponents into uncomfortable reactions.",
-
-  "Volume Striker":
-    "Volume strikers drown opponents through relentless output, pace and accumulation."
-};
+const styleDoctrine = { "Pressure Boxer": "Pressure boxers weaponize forward movement, pocket exchanges and sustained damage accumulation.", "Kickboxer": "Kickboxers specialize in range control, striking precision and layered offensive setups.", "Pressure Wrestler": "Pressure wrestlers overwhelm opponents through relentless pace, takedowns, cage control and cardio pressure.", "Well Rounded MMA Fighter": "Well rounded fighters adapt across striking, wrestling and grappling depending on matchup demands.", "Counter Striker": "Counter strikers rely on timing, reads and punishment windows rather than pure aggression.", "Submission Hunter": "Submission hunters aggressively chase scrambles, transitions and finishing sequences on the ground.", "Chain Wrestler": "Chain wrestlers relentlessly pursue takedowns through repeated entries, transitions and positional persistence.", "Distance Striker": "Distance strikers prioritize footwork, spacing and long-range engagement control to avoid pressure and punish entries.", "Volume Striker": "Volume strikers drown opponents through relentless output, pace and accumulation." };
 const styleThemes = {
   "Pressure Wrestler": "#991B1B",
   "Counter Striker": "#0891B2",
@@ -42,42 +18,13 @@ const styleThemes = {
   "Volume Striker": "#0F766E"
 };
 
-const styleMatchups = {
-  "Pressure Wrestler":
-    "Strong against Kickboxers and Volume Strikers. Vulnerable to elite anti-wrestlers.",
-
-  "Counter Striker":
-    "Strong against aggressive pressure fighters. Vulnerable to layered feints and wrestling pressure.",
-
-  "Kickboxer":
-    "Strong at range management and technical striking battles. Vulnerable to cage pressure and chain wrestling.",
-
-  "Submission Hunter":
-    "Dangerous during scrambles and transitions. Vulnerable against disciplined top control.",
-
-  "Pressure Boxer":
-    "Overwhelms technical fighters through pace and attrition. Vulnerable to precise counters.",
-
-  "Well Rounded MMA Fighter":
-    "Adaptable across multiple styles. Vulnerable when forced into specialist domains.",
-
-  "Chaos Fighter":
-    "Creates unpredictable exchanges and momentum swings. Vulnerable to disciplined technicians.",
-
-  "Volume Striker":
-    "Breaks opponents through pace and accumulation. Vulnerable to explosive power counters."
-};
+const styleMatchups = { "Pressure Boxer": "Overwhelms technical fighters through pace and attrition. Vulnerable to precise counters and lateral movement.", "Kickboxer": "Strong at range management and technical striking battles. Vulnerable to cage pressure and chain wrestling.", "Pressure Wrestler": "Strong against Kickboxers and Volume Strikers. Vulnerable to elite anti-wrestlers and dangerous submission threats.", "Well Rounded MMA Fighter": "Adaptable across multiple styles. Vulnerable when forced into specialist domains.", "Counter Striker": "Strong against aggressive pressure fighters. Vulnerable to layered feints and sustained wrestling pressure.", "Submission Hunter": "Dangerous during scrambles and transitions. Vulnerable against disciplined top control and positional grapplers.", "Chain Wrestler": "Excels against distance-based strikers through relentless takedown chaining. Vulnerable to explosive scramblers and submission traps.", "Distance Striker": "Excels in open space and long-range engagements. Vulnerable to cage pressure and attritional wrestling.", "Volume Striker": "Breaks opponents through pace and accumulation. Vulnerable to explosive power counters." };
 const styleAttributes = {
-  "Pressure Wrestler": {
-    Pressure: 95,
-    Control: 96,
-    Cardio: 92
-  },
 
-  "Counter Striker": {
-    Timing: 95,
-    Precision: 91,
-    Defense: 88
+  "Pressure Boxer": {
+    Pressure: 94,
+    Damage: 91,
+    Pace: 88
   },
 
   "Kickboxer": {
@@ -86,16 +33,10 @@ const styleAttributes = {
     Damage: 92
   },
 
-  "Submission Hunter": {
-    Grappling: 96,
-    Scrambles: 91,
-    Finishing: 94
-  },
-
-  "Pressure Boxer": {
-    Pressure: 94,
-    Damage: 91,
-    Pace: 88
+  "Pressure Wrestler": {
+    Pressure: 95,
+    Control: 96,
+    Cardio: 92
   },
 
   "Well Rounded MMA Fighter": {
@@ -104,10 +45,28 @@ const styleAttributes = {
     Balance: 92
   },
 
-  "Chaos Fighter": {
-    Aggression: 97,
-    Volatility: 95,
-    Momentum: 92
+  "Counter Striker": {
+    Timing: 95,
+    Precision: 91,
+    Defense: 88
+  },
+
+  "Submission Hunter": {
+    Grappling: 96,
+    Scrambles: 91,
+    Finishing: 94
+  },
+
+  "Chain Wrestler": {
+    Pace: 95,
+    Control: 93,
+    Exhaustion: 92
+  },
+
+  "Distance Striker": {
+    Footwork: 94,
+    Range: 95,
+    Timing: 90
   },
 
   "Volume Striker": {
@@ -115,7 +74,9 @@ const styleAttributes = {
     Pace: 92,
     Attrition: 90
   }
+
 };
+
 function getImageName(fighterName) {
   if (fighterName === "Sean Strickland") return "Strickland";
   if (fighterName === "Sean O'Malley") return "sean";
@@ -158,10 +119,12 @@ document
   });
 
   const { data, error } = await supabaseClient
-    .from("fighters")
-    .select("*")
-    .eq("primary_style", styleType)
-    .order("weight_class", { ascending: true });
+  .from("fighters")
+  .select("*")
+  .or(
+    `primary_style.eq.${styleType},secondary_style.eq.${styleType}`
+  )
+  .order("weight_class", { ascending: true });
 
   if (error) {
     console.error(error);
