@@ -753,6 +753,90 @@ async function loadFighter() {
 
 </div>
 
+<div class="heatmap-section">
+
+        <h2>Strike Heat Map</h2>
+
+        <div class="insight-grid">
+
+          <div class="insight-card">
+            <span>OFFENSIVE PROFILE</span>
+            <h3>${attackInsight}</h3>
+          </div>
+
+          <div class="insight-card">
+            <span>DEFENSIVE PROFILE</span>
+            <h3>${defenseInsight}</h3>
+          </div>
+
+        </div>
+
+        <div class="heatmap-grid">
+
+          <div class="heatmap-card">
+            <h3>Offense</h3>
+
+            <div class="heat-row">
+              <span>Head</span>
+              <div class="heat-bar">
+                <div style="width: ${data.head_attack}%"></div>
+              </div>
+              <strong>${data.head_attack}%</strong>
+            </div>
+
+            <div class="heat-row">
+              <span>Body</span>
+              <div class="heat-bar">
+                <div style="width: ${data.body_attack}%"></div>
+              </div>
+              <strong>${data.body_attack}%</strong>
+            </div>
+
+            <div class="heat-row">
+              <span>Legs</span>
+              <div class="heat-bar">
+                <div style="width: ${data.leg_attack}%"></div>
+              </div>
+              <strong>${data.leg_attack}%</strong>
+            </div>
+
+          </div>
+
+          <div class="heatmap-card">
+            <h3>Defense</h3>
+
+            <div class="heat-row">
+              <span>Head</span>
+              <div class="heat-bar">
+                <div style="width: ${data.head_defense}%"></div>
+              </div>
+              <strong>${data.head_defense}%</strong>
+            </div>
+
+            <div class="heat-row">
+              <span>Body</span>
+              <div class="heat-bar">
+                <div style="width: ${data.body_defense}%"></div>
+              </div>
+              <strong>${data.body_defense}%</strong>
+            </div>
+
+            <div class="heat-row">
+              <span>Legs</span>
+              <div class="heat-bar">
+                <div style="width: ${data.leg_defense}%"></div>
+              </div>
+              <strong>${data.leg_defense}%</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
       
       <div class="style-breakdown-grid">
 
@@ -865,90 +949,6 @@ async function loadFighter() {
   </p>
 
 </div>
-
-      <div class="heatmap-section">
-
-        <h2>Strike Heat Map</h2>
-
-        <div class="insight-grid">
-
-          <div class="insight-card">
-            <span>OFFENSIVE PROFILE</span>
-            <h3>${attackInsight}</h3>
-          </div>
-
-          <div class="insight-card">
-            <span>DEFENSIVE PROFILE</span>
-            <h3>${defenseInsight}</h3>
-          </div>
-
-        </div>
-
-        <div class="heatmap-grid">
-
-          <div class="heatmap-card">
-            <h3>Offense</h3>
-
-            <div class="heat-row">
-              <span>Head</span>
-              <div class="heat-bar">
-                <div style="width: ${data.head_attack}%"></div>
-              </div>
-              <strong>${data.head_attack}%</strong>
-            </div>
-
-            <div class="heat-row">
-              <span>Body</span>
-              <div class="heat-bar">
-                <div style="width: ${data.body_attack}%"></div>
-              </div>
-              <strong>${data.body_attack}%</strong>
-            </div>
-
-            <div class="heat-row">
-              <span>Legs</span>
-              <div class="heat-bar">
-                <div style="width: ${data.leg_attack}%"></div>
-              </div>
-              <strong>${data.leg_attack}%</strong>
-            </div>
-
-          </div>
-
-          <div class="heatmap-card">
-            <h3>Defense</h3>
-
-            <div class="heat-row">
-              <span>Head</span>
-              <div class="heat-bar">
-                <div style="width: ${data.head_defense}%"></div>
-              </div>
-              <strong>${data.head_defense}%</strong>
-            </div>
-
-            <div class="heat-row">
-              <span>Body</span>
-              <div class="heat-bar">
-                <div style="width: ${data.body_defense}%"></div>
-              </div>
-              <strong>${data.body_defense}%</strong>
-            </div>
-
-            <div class="heat-row">
-              <span>Legs</span>
-              <div class="heat-bar">
-                <div style="width: ${data.leg_defense}%"></div>
-              </div>
-              <strong>${data.leg_defense}%</strong>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
   `;
 
   animateStats();

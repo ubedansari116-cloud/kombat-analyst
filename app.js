@@ -24,6 +24,9 @@ function displayFighters(fighters) {
   const countElement = document.getElementById("fighter-count");
 
   countElement.textContent = `${fighters.length} fighters found`;
+  if (!container) {
+  return;
+}
   container.innerHTML = "";
 if (fighters.length === 0) {
 

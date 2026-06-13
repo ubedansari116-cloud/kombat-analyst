@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Fighters | Kombat Analyst</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+
+    <div class="nav-logo">
+      Kombat Analyst
+    </div>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="divisions.html">Weight Classes</a>
+      <a href="rankings.html">Rankings</a>
+
+      <a href="styles.html">Styles</a>
+    </div>
+
+  </nav>
+
+  <section class="command-center fade-section">
+
+  <div class="command-header">
+    <p class="section-kicker">Fighter Database</p>
+    <h2>Browse Fighters</h2>
+  </div>
+
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Search fighters..."
+  >
+
+  <p id="fighter-count">
+    Loading fighters...
+  </p>
+
+</section>
+
+<div
+  id="fighters-container"
+  class="fade-section"
+>
+
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+
+</div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>

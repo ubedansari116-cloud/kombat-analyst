@@ -2572,3 +2572,304 @@ body {
     font-size: 1.1rem;
     font-weight: 800;
 }
+.home-nav-grid {
+    width: min(1200px, calc(100% - 40px));
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.home-nav-card {
+    padding: 34px;
+    border-radius: 24px;
+    text-decoration: none;
+    background: linear-gradient(145deg, rgba(19,26,42,0.96), rgba(11,16,32,0.98));
+    border: 1px solid rgba(251,191,36,0.16);
+    transition: all 0.25s ease;
+}
+
+.home-nav-card h2 {
+    color: #FBBF24;
+    margin-bottom: 12px;
+}
+
+.home-nav-card p {
+    color: #CBD5E1;
+    line-height: 1.6;
+}
+
+.home-nav-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(251,191,36,0.45);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+}
+.featured-analysis {
+    width: min(1200px, calc(100% - 40px));
+    margin: 60px auto;
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.analysis-card {
+    padding: 28px;
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19,26,42,0.96),
+            rgba(11,16,32,0.98)
+        );
+
+    border: 1px solid rgba(251,191,36,0.14);
+
+    transition: all 0.25s ease;
+}
+
+.analysis-card:hover {
+    transform: translateY(-6px);
+
+    border-color:
+        rgba(251,191,36,0.4);
+}
+
+.analysis-card h3 {
+    color: #FBBF24;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.analysis-card p {
+    color: #CBD5E1;
+    line-height: 1.7;
+}
+/* PHASE 9 MOBILE / LAYOUT CLEANUP */
+
+/* Back button cleanup */
+.back-button-container {
+    width: min(1200px, calc(100% - 40px));
+    margin: 18px auto 0 auto;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.back-button {
+    padding: 9px 14px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+}
+
+/* Stop profile feeling like one long barrel */
+.fighter-profile-card {
+    width: min(1280px, calc(100% - 28px));
+    padding: 28px;
+}
+
+.style-breakdown-grid,
+.matchup-tendencies-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+}
+
+.style-box,
+.tendency-box {
+    text-align: left;
+}
+
+/* Make profile info blocks breathe */
+.win-conditions-box,
+.danger-zones-box,
+.historical-comparison-box,
+.meta-relevance-box,
+.combat-dna,
+.heatmap-section {
+    margin-top: 30px;
+}
+
+/* Mobile profile cleanup */
+@media (max-width: 800px) {
+    .fighter-profile-card {
+        width: calc(100% - 18px);
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    .style-breakdown-grid,
+    .matchup-tendencies-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .style-box,
+    .tendency-box,
+    .win-conditions-box,
+    .danger-zones-box,
+    .historical-comparison-box,
+    .meta-relevance-box,
+    .combat-dna,
+    .heatmap-section {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .style-box h2,
+    .tendency-box h2,
+    .win-conditions-box h2,
+    .danger-zones-box h2,
+    .historical-comparison-box h2,
+    .meta-relevance-box h2 {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    .style-box p,
+    .tendency-box p,
+    .win-conditions-box p,
+    .danger-zones-box p,
+    .historical-comparison-box p,
+    .meta-relevance-box p {
+        text-align: left;
+        line-height: 1.7;
+    }
+
+    .back-button-container {
+        width: calc(100% - 24px);
+        margin-top: 14px;
+    }
+}
+#rankings-container {
+    width: min(1100px, calc(100% - 40px));
+    margin: 40px auto 80px auto;
+}
+
+.rankings-section {
+    margin-bottom: 38px;
+    padding: 26px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(19,26,42,0.96), rgba(11,16,32,0.98));
+    border: 1px solid rgba(251,191,36,0.14);
+}
+
+.rankings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rankings-header h2 {
+    color: #FBBF24;
+}
+
+.rankings-header a {
+    color: #CBD5E1;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.ranking-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 220px;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.ranking-row:hover {
+    background: rgba(251,191,36,0.08);
+}
+
+.ranking-position {
+    color: #FBBF24;
+    font-weight: 900;
+}
+
+.ranking-name {
+    color: #F8FAFC;
+    font-weight: 800;
+}
+
+.ranking-style {
+    color: #94A3B8;
+    text-align: right;
+}
+
+@media (max-width: 700px) {
+    .ranking-row {
+        grid-template-columns: 60px 1fr;
+    }
+
+    .ranking-style {
+        grid-column: 2;
+        text-align: left;
+        font-size: 0.9rem;
+    }
+
+    .rankings-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+.champion-showcase {
+    margin-bottom: 24px;
+    padding: 28px;
+    border-radius: 20px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(251,191,36,0.12),
+        rgba(251,191,36,0.04)
+    );
+
+    border: 1px solid rgba(251,191,36,0.35);
+
+    cursor: pointer;
+}
+
+.champion-showcase span {
+    display: block;
+
+    color: #FBBF24;
+
+    font-size: 0.85rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 8px;
+}
+
+.champion-showcase h3 {
+    font-size: 1.8rem;
+    color: #F8FAFC;
+}
+.view-division-link {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    color: #FBBF24;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+}
+
+.view-division-link:hover {
+    transform: translateX(4px);
+} 
