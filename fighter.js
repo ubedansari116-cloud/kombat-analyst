@@ -725,15 +725,31 @@ async function loadFighter() {
 
   <div class="dna-styles">
 
-    <span class="dna-style primary-style">
-      ${data.primary_style || "Unknown Primary Style"}
+  <div class="dna-item">
+
+    <span class="dna-label">
+      Primary Style
     </span>
 
-    <span class="dna-style secondary-style">
-      ${data.secondary_style || "Unknown Secondary Style"}
+    <span class="dna-style primary-style">
+      ${data.primary_style || "Unknown"}
     </span>
 
   </div>
+
+  <div class="dna-item">
+
+    <span class="dna-label">
+      Secondary Style
+    </span>
+
+    <span class="dna-style secondary-style">
+      ${data.secondary_style || "Unknown"}
+    </span>
+
+  </div>
+
+</div>
 
   <div class="dna-traits">
 
