@@ -1,9 +1,10 @@
-Deno.serve(async (req) => {
+const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
+
+Deno.serve(async (_req) => {
   return new Response(
     JSON.stringify({
       message: "Kombat Analyst backend is online.",
-      function: "analyze-fighter",
-      status: "success"
+      geminiKeyLoaded: Boolean(GEMINI_API_KEY)
     }),
     {
       headers: {
