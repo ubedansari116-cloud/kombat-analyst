@@ -552,6 +552,30 @@ function generateFighterAnalysis(fighter) {
   return `${fighter.name} brings a layered combat style that blends multiple offensive and defensive systems across striking and grappling exchanges.`;
 }
 
+function formatAIReport(report) {
+  const sections = report
+    .split(/\n\s*\n/)
+    .map(section => section.trim())
+    .filter(Boolean);
+
+  return sections.map(section => {
+    const lines = section
+      .split("\n")
+      .map(line => line.trim())
+      .filter(Boolean);
+
+    const title = lines.shift() || "Analysis";
+    const content = lines.join("<br>");
+
+    return `
+      <div class="ai-report-section">
+        <h3>${title}</h3>
+        <p>${content}</p>
+      </div>
+    `;
+  }).join("");
+}
+
 async function loadFighter() {
   const params = new URLSearchParams(window.location.search);
   const fighterId = params.get("id");
@@ -766,6 +790,25 @@ async function loadFighter() {
     </span>
 
   </div>
+  
+  </div>
+
+  <div class="combat-intelligence-card">
+
+  <p class="section-kicker">Combat Intelligence</p>
+
+  <h2>AI Scouting Report</h2>
+
+  <p>
+    Generate a tactical breakdown using this fighter's stats, combat style,
+    win conditions, vulnerabilities and tendencies.
+  </p>
+
+  <button id="analyze-fighter-btn" class="analyze-btn">
+    Generate Report
+  </button>
+
+  <div id="ai-report-output" class="ai-report-output"></div>
 
 </div>
 
@@ -966,6 +1009,61 @@ async function loadFighter() {
 
 </div>
   `;
+
+  const analyzeButton =
+  document.getElementById("analyze-fighter-btn");
+
+const reportOutput =
+  document.getElementById("ai-report-output");
+
+if (analyzeButton && reportOutput) {
+  analyzeButton.addEventListener("click", async () => {
+    analyzeButton.disabled = true;
+    analyzeButton.textContent = "Analyzing...";
+
+    reportOutput.style.display = "block";
+    reportOutput.innerHTML = `
+      <div class="ai-loading">
+        <h3>🧠 Kombat AI is analyzing ${data.name}...</h3>
+        <p>Studying fight style, tendencies, strengths and vulnerabilities.</p>
+      </div>
+    `;
+
+    try {
+      const response = await fetch(
+        "https://xrjxoyfpkthkziodmfta.supabase.co/functions/v1/analyze-fighter",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            fighter: data
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.status !== "success") {
+        throw new Error(result.message || "AI analysis failed.");
+      }
+
+      reportOutput.innerHTML = formatAIReport(result.analysis);
+      analyzeButton.textContent = "Report Generated";
+    } catch (error) {
+      reportOutput.innerHTML = `
+        <p class="ai-error">
+          AI analysis failed. Please try again.
+        </p>
+      `;
+
+      analyzeButton.disabled = false;
+      analyzeButton.textContent = "Generate Report";
+      console.error(error);
+    }
+  });
+}
 
   animateStats();
 }

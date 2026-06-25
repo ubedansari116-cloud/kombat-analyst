@@ -23,10 +23,13 @@ function displayFighters(fighters) {
   const container = document.getElementById("fighters-container");
   const countElement = document.getElementById("fighter-count");
 
-  countElement.textContent = `${fighters.length} fighters found`;
+  if (countElement) {
+    countElement.textContent = `${fighters.length} fighters found`;
+  }
+
   if (!container) {
-  return;
-}
+    return;
+  }
   container.innerHTML = "";
 if (fighters.length === 0) {
 
@@ -96,6 +99,10 @@ if (fighters.length === 0) {
 function populateComparisonDropdowns() {
   const fighterA = document.getElementById("fighter-a");
   const fighterB = document.getElementById("fighter-b");
+
+  if (!fighterA || !fighterB) {
+    return;
+  }
 
   fighterA.innerHTML = '<option value="">Select Fighter A</option>';
   fighterB.innerHTML = '<option value="">Select Fighter B</option>';
@@ -1649,6 +1656,10 @@ function searchFighters() {
   const searchInput =
     document.getElementById("search-input");
 
+  if (!searchInput) {
+    return;
+  }
+
   const searchTerm =
     searchInput.value.toLowerCase();
 
@@ -1688,5 +1699,10 @@ window.addEventListener("scroll", () => {
     backToTop.classList.add("show");
   } else {
     backToTop.classList.remove("show");
+  }
+});
+document.addEventListener("input", (event) => {
+  if (event.target.id === "search-input") {
+    searchFighters();
   }
 });
