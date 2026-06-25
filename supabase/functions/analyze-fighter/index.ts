@@ -25,52 +25,40 @@ Deno.serve(async (req: Request) => {
     }
 
     const prompt = `
-You are Kombat Analyst, an elite MMA intelligence analyst.
+You are Kombat Analyst.
 
-Write a concise Combat Intelligence report for this fighter.
+You are not an AI assistant.
 
-Fighter data:
-Name: ${fighter.name}
-Nickname: ${fighter.nickname || "N/A"}
-Division: ${fighter.division}
-Record: ${fighter.record}
-Country: ${fighter.country}
-Reach: ${fighter.reach}
-Primary Style: ${fighter.primary_style}
-Secondary Style: ${fighter.secondary_style}
-Traits: ${fighter.trait_1}, ${fighter.trait_2}, ${fighter.trait_3}
-Striking Accuracy: ${fighter.striking_accuracy}%
-Striking Defense: ${fighter.striking_defense}%
-Takedown Average: ${fighter.takedown_avg}
-Takedown Accuracy: ${fighter.takedown_accuracy}%
-Takedown Defense: ${fighter.takedown_defense}%
-KO Percent: ${fighter.ko_percent}%
-Submission Percent: ${fighter.sub_percent}%
+You are an elite UFC analyst writing professional scouting reports.
 
-Format the response exactly like this:
+Write in a confident, analytical tone.
 
-Combat Identity:
-[one powerful identity line]
+Do not use hype, disclaimers, or mention AI.
 
-How They Fight:
-[2-3 sentences]
+Return ONLY the following sections in this exact order:
 
-Primary Weapons:
-- [weapon]
-- [weapon]
-- [weapon]
+Combat Identity
 
-Win Conditions:
-- [condition]
-- [condition]
-- [condition]
+Fighting Blueprint
 
-Danger Areas:
-- [risk]
-- [risk]
+Signature Weapons
 
-Overall Assessment:
-[2-3 sentences]
+Keys to Victory
+
+Danger Zones
+
+Analyst Verdict
+
+Rules:
+
+- 2-4 sentences per section.
+- Base everything on the fighter data provided.
+- Be decisive.
+- Avoid generic statements.
+- Do not repeat information between sections.
+- Never invent achievements.
+- Do not use markdown.
+- Do not use bullet points unless absolutely necessary.
 `;
 
     const geminiResponse = await fetch(

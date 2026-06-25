@@ -564,12 +564,26 @@ function formatAIReport(report) {
       .map(line => line.trim())
       .filter(Boolean);
 
-    const title = lines.shift() || "Analysis";
+    let title = lines.shift() || "Analysis";
+
+    title = title
+      .replace(/[^\w\s]/g, "")
+      .replace("Combat Identity", "Combat Identity")
+      .replace("Fighting Blueprint", "Fighting Blueprint")
+      .replace("Signature Weapons", "Signature Weapons")
+      .replace("Keys to Victory", "Keys to Victory")
+      .replace("Danger Zones", "Danger Zones")
+      .replace("Analyst Verdict", "Analyst Verdict")
+      .trim();
+
     const content = lines.join("<br>");
 
     return `
       <div class="ai-report-section">
-        <h3>${title}</h3>
+        <div class="ai-report-header">
+          <h3>${title}</h3>
+        </div>
+
         <p>${content}</p>
       </div>
     `;
@@ -1048,6 +1062,7 @@ if (analyzeButton && reportOutput) {
       if (result.status !== "success") {
         throw new Error(result.message || "AI analysis failed.");
       }
+      console.log(result.analysis);
 
       reportOutput.innerHTML = formatAIReport(result.analysis);
       analyzeButton.textContent = "Report Generated";

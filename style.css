@@ -3112,39 +3112,38 @@ body {
 }
 
 .ai-report-section{
-
     margin-bottom:28px;
-
-    padding-bottom:24px;
-
-    border-bottom:1px solid rgba(251,191,36,.12);
-
+    padding:22px;
+    border-radius:18px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(251,191,36,.12);
 }
 
 .ai-report-section:last-child{
-
-    border-bottom:none;
-
     margin-bottom:0;
+}
 
+.ai-report-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.ai-report-icon{
+    font-size:1.4rem;
 }
 
 .ai-report-section h3{
-
+    margin:0;
     color:#FBBF24;
-
-    font-size:1.2rem;
-
-    margin-bottom:14px;
-
+    font-size:1.15rem;
 }
 
 .ai-report-section p{
-
+    margin:0;
     color:#E5E7EB;
-
-    line-height:1.9;
-
+    line-height:1.8;
 }
 .ai-report-output {
     max-width: 900px;
