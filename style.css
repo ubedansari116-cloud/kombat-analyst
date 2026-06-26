@@ -470,11 +470,17 @@ h1 {
     backdrop-filter: blur(12px);
 }
 
-.command-header {
-    text-align: center;
-    margin-bottom: 24px;
-}
+.command-header{
+    max-width:800px;
+    margin:0 auto;
 
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
 .section-kicker {
     color: #FBBF24;
     text-transform: uppercase;
@@ -3180,4 +3186,249 @@ body {
 
 .ai-report-section p {
     margin: 0 !important;
+}
+.analysis-link{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:28px;
+    padding:14px 28px;
+
+    border:1px solid #FBBF24;
+    border-radius:999px;
+
+    color:#FBBF24;
+    font-weight:700;
+    font-size:0.95rem;
+    text-decoration:none;
+
+    transition:all .25s ease;
+}
+
+.analysis-link:hover{
+    background:#FBBF24;
+    color:#111827;
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(251,191,36,.25);
+}
+button.analysis-link{
+    background:transparent;
+    cursor:pointer;
+}
+
+button.analysis-link:hover{
+    background:#FBBF24;
+    color:#111827;
+}
+.ai-report-section h3{
+
+    color:#FBBF24;
+
+    font-size:1.15rem;
+
+    font-weight:700;
+
+    margin-bottom:14px;
+
+}
+
+.ai-report-section p{
+
+    color:#D1D5DB;
+
+    font-weight:400;
+
+    line-height:1.8;
+
+}
+.prediction-text{
+
+    text-align:center;
+
+    font-size:1.2rem;
+
+    font-weight:700;
+
+}
+/* FIX AI tactical report text */
+body:has(#comparison-results) .ai-report-section{
+    text-align:left !important;
+    background:rgba(255,255,255,.03) !important;
+    border:1px solid rgba(251,191,36,.12) !important;
+}
+
+body:has(#comparison-results) .ai-report-section h3{
+    color:#FBBF24 !important;
+    font-weight:800 !important;
+    text-align:left !important;
+    margin-bottom:14px !important;
+}
+
+body:has(#comparison-results) .ai-report-section p{
+    color:#D1D5DB !important;
+    font-weight:400 !important;
+    text-align:left !important;
+    font-size:1rem !important;
+    line-height:1.8 !important;
+}
+
+/* Only final verdict content */
+body:has(#comparison-results) .verdict-section{
+    text-align:center !important;
+    background:linear-gradient(135deg, rgba(251,191,36,.08), rgba(17,24,39,.98)) !important;
+    border-color:rgba(251,191,36,.28) !important;
+}
+
+body:has(#comparison-results) .verdict-section h3{
+    text-align:center !important;
+}
+
+body:has(#comparison-results) .verdict-section p{
+    text-align:center !important;
+    color:#E5E7EB !important;
+    font-size:1.05rem !important;
+    font-weight:500 !important;
+}
+.ai-report-section,
+.verdict-section{
+    text-align:left !important;
+    background:rgba(255,255,255,.03) !important;
+    border:1px solid rgba(251,191,36,.12) !important;
+    padding:24px !important;
+    margin-bottom:22px !important;
+}
+
+.ai-report-section h3,
+.verdict-section h3{
+    color:#FBBF24 !important;
+    font-weight:800 !important;
+    margin:0 0 12px 0 !important;
+    text-align:left !important;
+}
+
+.ai-report-section p,
+.verdict-section p{
+    color:#D1D5DB !important;
+    font-weight:400 !important;
+    font-size:1rem !important;
+    line-height:1.75 !important;
+    text-align:left !important;
+    margin:0 !important;
+}
+
+.verdict-section{
+    text-align:center !important;
+    border-color:rgba(251,191,36,.3) !important;
+}
+
+.verdict-section h3,
+.verdict-section p{
+    text-align:center !important;
+}
+/* Compare AI Tactical Breakdown layout fix */
+
+#comparison-results{
+    width:min(1400px, calc(100% - 48px)) !important;
+    max-width:1400px !important;
+}
+
+#comparison-results .comparison-card,
+#comparison-results .combat-intelligence-card{
+    width:100% !important;
+    max-width:100% !important;
+}
+
+#matchup-analysis-output{
+    width:100% !important;
+    max-width:1200px !important;
+    margin:28px auto 0 !important;
+    white-space:normal !important;
+}
+
+#matchup-analysis-output .ai-report-section,
+#matchup-analysis-output .verdict-section{
+    width:100% !important;
+    max-width:100% !important;
+    text-align:left !important;
+
+    padding:26px 30px !important;
+    margin-bottom:22px !important;
+
+    background:rgba(255,255,255,.03) !important;
+    border:1px solid rgba(251,191,36,.12) !important;
+    border-radius:18px !important;
+}
+
+#matchup-analysis-output .ai-report-section h3,
+#matchup-analysis-output .verdict-section h3{
+    color:#FBBF24 !important;
+    font-weight:800 !important;
+    text-align:left !important;
+    margin:0 0 12px 0 !important;
+}
+
+#matchup-analysis-output .ai-report-section p,
+#matchup-analysis-output .verdict-section p{
+    color:#D1D5DB !important;
+    font-weight:400 !important;
+    font-size:1rem !important;
+    line-height:1.75 !important;
+    text-align:left !important;
+    margin:0 !important;
+    max-width:none !important;
+}
+
+/* ---------- Reusable AI Report Component ---------- */
+
+.ai-report-output{
+    width:100% !important;
+    max-width:1200px !important;
+    margin:32px auto 0 !important;
+    white-space:normal !important;
+}
+
+.ai-report-card{
+    width:100%;
+    max-width:100%;
+
+    padding:26px 30px;
+    margin-bottom:22px;
+
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(251,191,36,.12);
+    border-radius:18px;
+
+    text-align:left;
+}
+
+.ai-report-card h3{
+    margin:0 0 12px 0;
+
+    color:#FBBF24;
+
+    font-size:1.15rem;
+    font-weight:800;
+}
+
+.ai-report-card p{
+    margin:0;
+
+    color:#D1D5DB;
+
+    font-size:1rem;
+    font-weight:400;
+
+    line-height:1.75;
+
+    max-width:none;
+}
+
+.ai-verdict-card{
+    border-color:rgba(251,191,36,.28);
+    background:linear-gradient(
+        135deg,
+        rgba(251,191,36,.08),
+        rgba(17,24,39,.98)
+    );
 }

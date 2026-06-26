@@ -553,41 +553,7 @@ function generateFighterAnalysis(fighter) {
 }
 
 function formatAIReport(report) {
-  const sections = report
-    .split(/\n\s*\n/)
-    .map(section => section.trim())
-    .filter(Boolean);
-
-  return sections.map(section => {
-    const lines = section
-      .split("\n")
-      .map(line => line.trim())
-      .filter(Boolean);
-
-    let title = lines.shift() || "Analysis";
-
-    title = title
-      .replace(/[^\w\s]/g, "")
-      .replace("Combat Identity", "Combat Identity")
-      .replace("Fighting Blueprint", "Fighting Blueprint")
-      .replace("Signature Weapons", "Signature Weapons")
-      .replace("Keys to Victory", "Keys to Victory")
-      .replace("Danger Zones", "Danger Zones")
-      .replace("Analyst Verdict", "Analyst Verdict")
-      .trim();
-
-    const content = lines.join("<br>");
-
-    return `
-      <div class="ai-report-section">
-        <div class="ai-report-header">
-          <h3>${title}</h3>
-        </div>
-
-        <p>${content}</p>
-      </div>
-    `;
-  }).join("");
+    return renderAIReport(report, "verdict");
 }
 
 async function loadFighter() {

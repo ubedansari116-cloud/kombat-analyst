@@ -17,16 +17,16 @@ Deno.serve(async (req: Request) => {
       throw new Error("OpenRouter API key missing.");
     }
 
-    const { fighter } = await req.json();
+    const { fighterA, fighterB } = await req.json();
 
-    if (!fighter) {
-      throw new Error("Fighter data is required.");
+    if (!fighterA || !fighterB) {
+      throw new Error("Both fighters are required.");
     }
 
     const prompt = `
 You are Kombat Analyst.
 
-You are an elite UFC analyst writing professional fighter scouting reports.
+You are an elite UFC analyst writing tactical matchup breakdowns.
 
 Do not mention AI.
 Do not use markdown.
@@ -34,24 +34,31 @@ Be analytical, decisive, and specific.
 Use short paragraphs.
 Do not invent achievements.
 
-Analyze this fighter using the provided fighter data.
+Analyze this matchup using the provided fighter data.
 
 Return ONLY these sections, exactly in this order:
 
-Combat Identity
+Fight Summary
 
-Fighting Blueprint
+Striking Battle
 
-Signature Weapons
+Grappling Battle
 
-Keys to Victory
+Pace & Cardio
 
-Danger Zones
+Keys to Victory (${fighterA.name})
+
+Keys to Victory (${fighterB.name})
+
+Biggest X-Factor
 
 Kombat Analyst Verdict
 
-Fighter:
-${JSON.stringify(fighter, null, 2)}
+Fighter A:
+${JSON.stringify(fighterA, null, 2)}
+
+Fighter B:
+${JSON.stringify(fighterB, null, 2)}
 `;
 
     const openRouterResponse = await fetch(
@@ -65,16 +72,16 @@ ${JSON.stringify(fighter, null, 2)}
           "X-Title": "Kombat Analyst",
         },
         body: JSON.stringify({
-          model: "google/gemini-2.5-flash",
-          messages: [
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-          temperature: 0.7,
-          max_tokens: 1000,
-        }),
+  model: "google/gemini-2.5-flash",
+  messages: [
+    {
+      role: "user",
+      content: prompt,
+    },
+  ],
+  temperature: 0.7,
+  max_tokens: 1200
+}),
       }
     );
 
@@ -86,7 +93,7 @@ ${JSON.stringify(fighter, null, 2)}
 
     const analysis =
       data?.choices?.[0]?.message?.content ||
-      "No fighter analysis generated.";
+      "No matchup analysis generated.";
 
     return new Response(
       JSON.stringify({

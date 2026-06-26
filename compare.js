@@ -19,82 +19,6 @@ function getFighterImage(fighter) {
   return fighter.image_url ||
     `images/${getImageName(fighter.name)}.jpg`;
 }
-function displayFighters(fighters) {
-  const container = document.getElementById("fighters-container");
-  const countElement = document.getElementById("fighter-count");
-
-  if (countElement) {
-    countElement.textContent = `${fighters.length} fighters found`;
-  }
-
-  if (!container) {
-    return;
-  }
-  container.innerHTML = "";
-if (fighters.length === 0) {
-
-  container.innerHTML = `
-    <div class="empty-state">
-
-      <h2>No Fighters Found</h2>
-
-      <p>
-        Try searching another fighter.
-      </p>
-
-    </div>
-  `;
-
-  return;
-}
-  fighters.forEach((fighter) => {
-    const card = document.createElement("div");
-    card.classList.add("fighter-card");
-
-    card.addEventListener("click", () => {
-      window.location.href = `fighter.html?id=${fighter.id}`;
-    });
-
-    const imageName = getImageName(fighter.name);
-
-    card.innerHTML = `
-      <div class="fighter-image-container">
-        <img
-          src="${getFighterImage(fighter)}"
-          alt="${fighter.name}"
-          class="fighter-image"
-          onerror="this.src='https://placehold.co/600x600/111827/FBBF24?text=${encodeURIComponent(fighter.name)}';"
-        >
-      </div>
-
-      <div class="fighter-card-overlay">
-
-        <div class="fighter-rank-badge">
-          ${
-            fighter.rank === "Champion"
-              ? "🏆 Champion"
-              : fighter.rank || "Unranked"
-          }
-        </div>
-
-        <div class="fighter-division">
-          ${fighter.division}
-        </div>
-
-        <div class="fighter-name">
-          ${fighter.name}
-        </div>
-
-        <div class="fighter-record">
-          ${fighter.record}
-        </div>
-
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
-}
 
 function populateComparisonDropdowns() {
   const fighterA = document.getElementById("fighter-a");
@@ -122,22 +46,74 @@ function populateComparisonDropdowns() {
   });
 }
 
-async function loadFighters() {
+async function loadCompareFighters() {
+
   const { data, error } = await supabaseClient
     .from("fighters")
-    .select("*");
+    .select("*")
+    .order("name");
 
   if (error) {
-    console.error("Supabase error:", error);
+    console.error(error);
     return;
   }
 
   allFighters = data;
 
-  displayFighters(allFighters);
   populateComparisonDropdowns();
+
 }
 
+function getWinnerClass(a, b) {
+  if (Number(a) > Number(b)) return ["winner", ""];
+  if (Number(b) > Number(a)) return ["", "winner"];
+  return ["", ""];
+}
+
+function getWinnerIcon(a, b, side) {
+  a = Number(a);
+  b = Number(b);
+
+  if (a === b) return "";
+  if (side === "A" && a > b) return "🟢 ";
+  if (side === "B" && b > a) return "🟢 ";
+
+  return "";
+}
+
+function createComparisonRow(label, statA, statB, suffix = "") {
+  const [classA, classB] = getWinnerClass(statA, statB);
+
+  return `
+    <tr>
+      <td>${label}</td>
+
+      <td class="${classA}">
+        ${getWinnerIcon(statA, statB, "A")}
+        ${statA}${suffix}
+      </td>
+
+      <td class="${classB}">
+        ${getWinnerIcon(statA, statB, "B")}
+        ${statB}${suffix}
+      </td>
+    </tr>
+  `;
+}
+
+function calculateFighterScore(fighter) {
+  return (
+    Number(fighter.striking_accuracy) * 0.15 +
+    Number(fighter.striking_defense) * 0.15 +
+    Number(fighter.takedown_defense) * 0.20 +
+    Number(fighter.ko_percent) * 0.15 +
+    Number(fighter.sub_percent) * 0.15 +
+    Number(fighter.head_attack) * 0.05 +
+    Number(fighter.body_attack) * 0.05 +
+    Number(fighter.leg_attack) * 0.05 +
+    Number(fighter.head_defense) * 0.05
+  );
+}
 function generateMomentumDynamics(
   fighterA,
   fighterB
@@ -1134,46 +1110,586 @@ function generateStyleInteraction(fighterA, fighterB) {
   return summary;
 }
 
-function searchFighters() {
-  const searchInput =
-    document.getElementById("search-input");
+function compareFighters() {
+  const fighterAId = document.getElementById("fighter-a").value;
+  const fighterBId = document.getElementById("fighter-b").value;
 
-  if (!searchInput) {
+  if (!fighterAId || !fighterBId) {
+    alert("Select two fighters.");
     return;
   }
 
-  const searchTerm =
-    searchInput.value.toLowerCase();
+  if (fighterAId === fighterBId) {
+    alert("Select two different fighters.");
+    return;
+  }
 
-  const filteredFighters =
-    allFighters.filter((fighter) =>
-      fighter.name
-        .toLowerCase()
-        .includes(searchTerm)
-    );
+  const fighterA = allFighters.find((f) => f.id == fighterAId);
+  const fighterB = allFighters.find((f) => f.id == fighterBId);
 
-  displayFighters(filteredFighters);
+  const results = document.getElementById("comparison-results");
+
+  let fighterAWins = 0;
+  let fighterBWins = 0;
+  let advantages = [];
+
+  const categories = [
+    ["Striking Accuracy", fighterA.striking_accuracy, fighterB.striking_accuracy],
+    ["Striking Defense", fighterA.striking_defense, fighterB.striking_defense],
+    ["Takedown Defense", fighterA.takedown_defense, fighterB.takedown_defense],
+    ["KO Threat", fighterA.ko_percent, fighterB.ko_percent],
+    ["Submission Threat", fighterA.sub_percent, fighterB.sub_percent],
+  ];
+
+  categories.forEach(([label, a, b]) => {
+    a = Number(a);
+    b = Number(b);
+
+    if (a > b) {
+      fighterAWins++;
+      advantages.push(`${fighterA.name} leads in ${label}`);
+    } else if (b > a) {
+      fighterBWins++;
+      advantages.push(`${fighterB.name} leads in ${label}`);
+    }
+  });
+
+  let overallEdge = "Even Matchup";
+
+  if (fighterAWins > fighterBWins) overallEdge = fighterA.name;
+  if (fighterBWins > fighterAWins) overallEdge = fighterB.name;
+
+const baseFighterAScore =
+  calculateFighterScore(fighterA);
+
+const baseFighterBScore =
+  calculateFighterScore(fighterB);
+
+const styleAdvantages =
+  calculateStyleAdvantage(
+    fighterA,
+    fighterB
+  );
+
+const traitAdvantages =
+  calculateTraitAdvantage(
+    fighterA,
+    fighterB
+  );
+
+const fighterAScore =
+  baseFighterAScore +
+  styleAdvantages.fighterAStyleEdge +
+  traitAdvantages.fighterATraitEdge;
+
+const fighterBScore =
+  baseFighterBScore +
+  styleAdvantages.fighterBStyleEdge +
+  traitAdvantages.fighterBTraitEdge;
+  const totalScore = fighterAScore + fighterBScore;
+
+  const fighterAProbability = ((fighterAScore / totalScore) * 100).toFixed(1);
+  const fighterBProbability = ((fighterBScore / totalScore) * 100).toFixed(1);
+
+  const fightVerdict = generateFightVerdict(
+    fighterA,
+    fighterB,
+    overallEdge
+  );
+  const fightNarrative =
+  generateFightNarrative(
+    fighterA,
+    fighterB
+  );
+  const volatilityData =
+  calculateFightVolatility(
+    fighterA,
+    fighterB
+  );
+  const historicalInsight =
+  generateHistoricalInsight(
+    fighterA,
+    fighterB
+  );
+  const metaInsight =
+  generateMetaInsight(
+    fighterA,
+    fighterB
+  );
+  const roundDynamics =
+  generateRoundDynamics(
+    fighterA,
+    fighterB
+  );
+  const cardioDynamics =
+  generateCardioDynamics(
+    fighterA,
+    fighterB
+  );
+  const finishProbability =
+  generateFinishProbability(
+    fighterA,
+    fighterB
+  );
+  const upsetPotential =
+  generateUpsetPotential(
+    fighterA,
+    fighterB
+  );
+  const momentumDynamics =
+  generateMomentumDynamics(
+    fighterA,
+    fighterB
+  );
+const styleInteraction =
+  generateStyleInteraction(fighterA, fighterB);
+  results.innerHTML = `
+    <div class="comparison-card">
+
+      <div class="arena-header">
+        <p class="arena-kicker">Fight Matchup Analysis</p>
+
+        <h2 class="arena-title">
+          ${fighterA.name}
+          <span>VS</span>
+          ${fighterB.name}
+        </h2>
+      </div>
+
+      <div class="comparison-fighters">
+
+        <div class="comparison-fighter">
+          <img
+            src="images/${getImageName(fighterA.name)}.jpg"
+            alt="${fighterA.name}"
+            class="comparison-image"
+          >
+
+          <h3>${fighterA.name}</h3>
+        </div>
+
+        <div class="vs-text">VS</div>
+
+        <div class="comparison-fighter">
+          <img
+            src="images/${getImageName(fighterB.name)}.jpg"
+            alt="${fighterB.name}"
+            class="comparison-image"
+          >
+
+          <h3>${fighterB.name}</h3>
+        </div>
+
+      </div>
+
+      <p class="style-matchup">
+        ${fighterA.fighting_style}
+        vs
+        ${fighterB.fighting_style}
+      </p>
+
+      <div class="probability-box">
+
+        <h3>Kombat Analyst Score</h3>
+
+        <div class="probability-fighters">
+          <span>${fighterA.name}</span>
+          <span>${fighterB.name}</span>
+        </div>
+
+        <div class="probability-bar">
+          <div
+            class="probability-fill"
+            style="width: ${fighterAProbability}%"
+          ></div>
+        </div>
+
+        <div class="probability-values">
+          <strong>${fighterAProbability}%</strong>
+          <strong>${fighterBProbability}%</strong>
+        </div>
+
+      </div>
+
+      <div class="advantages-box">
+
+        <h3>Advantages</h3>
+
+        ${advantages.map((item) => `<p>✓ ${item}</p>`).join("")}
+        <p>
+  ⚔️ Style Edge:
+  ${styleAdvantages.fighterAStyleEdge >
+  styleAdvantages.fighterBStyleEdge
+
+    ? fighterA.name
+
+    : styleAdvantages.fighterBStyleEdge >
+      styleAdvantages.fighterAStyleEdge
+
+    ? fighterB.name
+
+    : "Even"}
+</p>
+<p>
+    🧬 Trait Edge:
+    ${traitAdvantages.fighterATraitEdge >
+    traitAdvantages.fighterBTraitEdge
+
+      ? fighterA.name
+
+      : traitAdvantages.fighterBTraitEdge >
+        traitAdvantages.fighterATraitEdge
+
+      ? fighterB.name
+
+      : "Even"}
+  </p>
+
+
+      </div>
+
+      <div class="combat-dna">
+
+        <h3>Combat DNA</h3>
+
+        <div class="comparison-dna-grid">
+
+          <div>
+            <h4>${fighterA.name}</h4>
+
+            <div class="dna-styles">
+
+              <span class="dna-style primary-style">
+                ${fighterA.primary_style}
+              </span>
+
+              <span class="dna-style secondary-style">
+                ${fighterA.secondary_style}
+              </span>
+
+            </div>
+
+            <div class="dna-traits">
+
+              <span class="dna-trait">${fighterA.trait_1}</span>
+              <span class="dna-trait">${fighterA.trait_2}</span>
+              <span class="dna-trait">${fighterA.trait_3}</span>
+
+            </div>
+          </div>
+
+          <div>
+            <h4>${fighterB.name}</h4>
+
+            <div class="dna-styles">
+
+              <span class="dna-style primary-style">
+                ${fighterB.primary_style}
+              </span>
+
+              <span class="dna-style secondary-style">
+                ${fighterB.secondary_style}
+              </span>
+
+            </div>
+
+            <div class="dna-traits">
+
+              <span class="dna-trait">${fighterB.trait_1}</span>
+              <span class="dna-trait">${fighterB.trait_2}</span>
+              <span class="dna-trait">${fighterB.trait_3}</span>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="style-interaction-box">
+
+  <h3>Style Interaction</h3>
+
+  <p>
+    ${styleInteraction}
+  </p>
+
+</div>
+
+<div class="fight-narrative-box">
+
+  <h3>Matchup Narrative</h3>
+
+  <p>
+    ${fightNarrative}
+  </p>
+
+</div>
+
+<div class="volatility-box">
+
+  <h3>Fight Volatility</h3>
+
+  <p>
+    ${volatilityData.volatilityDescription}
+  </p>
+
+</div>
+<div class="historical-insight-box">
+
+  <h3>Historical Matchup Insight</h3>
+
+  <p>
+    ${historicalInsight}
+  </p>
+
+</div>
+<div class="meta-insight-box">
+
+  <h3>Modern MMA Meta Insight</h3>
+
+  <p>
+    ${metaInsight}
+  </p>
+
+</div>
+<div class="round-dynamics-box">
+
+  <h3>Round Dynamics</h3>
+
+  <p>
+    ${roundDynamics}
+  </p>
+
+</div>
+<div class="cardio-box">
+
+  <h3>Cardio & Pressure Dynamics</h3>
+
+  <p>
+    ${cardioDynamics}
+  </p>
+
+</div>
+<div class="finish-box">
+
+  <h3>Finish Probability</h3>
+
+  <p>
+    ${finishProbability}
+  </p>
+
+</div>
+<div class="upset-box">
+
+  <h3>Upset Potential</h3>
+
+  <p>
+    ${upsetPotential}
+  </p>
+
+</div>
+<div class="momentum-box">
+
+  <h3>Momentum Swing Analysis</h3>
+
+  <p>
+    ${momentumDynamics}
+  </p>
+
+</div>
+
+<div class="analysis-box">
+
+  <h3>Smart Fight Verdict</h3>
+
+  <p>
+    ${fightVerdict}
+  </p>
+
+</div>
+      <table class="comparison-table">
+
+        <tr>
+          <th>Stat</th>
+          <th>${fighterA.name}</th>
+          <th>${fighterB.name}</th>
+        </tr>
+
+        <tr>
+          <td>Record</td>
+          <td>${fighterA.record}</td>
+          <td>${fighterB.record}</td>
+        </tr>
+
+        ${createComparisonRow(
+          "Striking Accuracy",
+          fighterA.striking_accuracy,
+          fighterB.striking_accuracy,
+          "%"
+        )}
+
+        ${createComparisonRow(
+          "Striking Defense",
+          fighterA.striking_defense,
+          fighterB.striking_defense,
+          "%"
+        )}
+
+        ${createComparisonRow(
+          "Takedown Defense",
+          fighterA.takedown_defense,
+          fighterB.takedown_defense,
+          "%"
+        )}
+
+        ${createComparisonRow(
+          "KO %",
+          fighterA.ko_percent,
+          fighterB.ko_percent,
+          "%"
+        )}
+
+        ${createComparisonRow(
+          "Submission %",
+          fighterA.sub_percent,
+          fighterB.sub_percent,
+          "%"
+        )}
+
+      </table>
+
+      <div class="summary-box">
+
+        <h3>Overall Edge</h3>
+
+        <p>${overallEdge}</p>
+
+        <p>
+          ${fighterA.name}: ${fighterAWins} category wins
+        </p>
+
+        <p>
+          ${fighterB.name}: ${fighterBWins} category wins
+        </p>
+
+      </div>
+
+    </div>
+    <div class="combat-intelligence-card">
+
+  <p class="section-kicker">
+    Tactical Breakdown
+  </p>
+
+  <h2>AI Matchup Analysis</h2>
+
+  <p class="analysis-description">
+    Generate a complete AI tactical breakdown explaining how these styles interact, where each fighter holds advantages, and who is most likely to control the fight.
+  </p>
+
+  <button
+      id="generate-matchup-analysis"
+      class="analysis-link">
+      Generate Tactical Breakdown →
+  </button>
+
+  <div
+      id="matchup-analysis-output"
+      class="ai-report-output">
+  </div>
+
+</div>
+  `;
 }
 
-window.searchFighters =
-  searchFighters;
+function formatMatchupReport(report) {
+    return renderAIReport(report, "verdict");
+}
 
-loadFighters();
+async function generateMatchupAnalysis(fighterA, fighterB) {
+  const output =
+    document.getElementById("matchup-analysis-output");
 
-window.addEventListener("scroll", () => {
-  const backToTop =
-    document.getElementById("back-to-top");
+  const button =
+    document.getElementById("generate-matchup-analysis");
 
-  if (!backToTop) return;
+  if (!output || !button) return;
 
-  if (window.scrollY > 500) {
-    backToTop.classList.add("show");
-  } else {
-    backToTop.classList.remove("show");
+  button.disabled = true;
+  button.textContent = "Analyzing matchup...";
+
+  output.style.display = "block";
+  output.innerHTML = `
+    <div class="ai-loading">
+      <h3>Kombat AI is analyzing the matchup...</h3>
+      <p>Studying styles, statistics, advantages and fight dynamics.</p>
+    </div>
+  `;
+
+  try {
+    const response = await fetch(
+      "https://xrjxoyfpkthkziodmfta.supabase.co/functions/v1/analyze-matchup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fighterA,
+          fighterB
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.status !== "success") {
+      throw new Error(result.message || "Matchup analysis failed.");
+    }
+
+    output.innerHTML = formatMatchupReport(result.analysis);
+    button.textContent = "Tactical Breakdown Generated";
+    } catch (error) {
+    console.error(error);
+
+    output.innerHTML = `
+      <p class="ai-error">
+        ${error.message || "Tactical breakdown failed. Please try again."}
+      </p>
+    `;
+
+    button.disabled = false;
+    button.textContent = "Generate Tactical Breakdown →";
+  }}
+
+document.addEventListener("click", (event) => {
+
+  if (event.target.id === "compare-btn") {
+    compareFighters();
   }
-});
-document.addEventListener("input", (event) => {
-  if (event.target.id === "search-input") {
-    searchFighters();
+
+  if (event.target.id === "generate-matchup-analysis") {
+    const fighterAId =
+      document.getElementById("fighter-a").value;
+
+    const fighterBId =
+      document.getElementById("fighter-b").value;
+
+    const fighterA =
+      allFighters.find(f => f.id == fighterAId);
+
+    const fighterB =
+      allFighters.find(f => f.id == fighterBId);
+
+    if (!fighterA || !fighterB) {
+      alert("Select and compare two fighters first.");
+      return;
+    }
+
+    generateMatchupAnalysis(fighterA, fighterB);
   }
+
 });
+
+
+loadCompareFighters();

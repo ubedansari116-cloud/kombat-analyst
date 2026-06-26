@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Compare Fighters | Kombat Analyst</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">Kombat Analyst</div>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="fighters.html">Fighters</a>
+      <a href="divisions.html">Weight Classes</a>
+      <a href="styles.html">Styles</a>
+      <a href="rankings.html">Rankings</a>
+    </div>
+  </nav>
+
+  <section class="weightclass-hero">
+    <p class="section-kicker">Fight Lab</p>
+    <h1>Compare Fighters</h1>
+    <p>Analyze styles, statistics and tactical matchups.</p>
+  </section>
+
+  <section class="command-center fade-section">
+
+    <div class="comparison-section">
+
+      <h3>Select Matchup</h3>
+
+      <div class="comparison-controls">
+
+        <select id="fighter-a">
+          <option value="">Select Fighter A</option>
+        </select>
+
+        <select id="fighter-b">
+          <option value="">Select Fighter B</option>
+        </select>
+
+        <button id="compare-btn">
+          Compare
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <div id="comparison-results">
+
+    <div class="comparison-placeholder">
+      <h2>Fight Analysis Arena</h2>
+      <p>Select two fighters to begin matchup analysis.</p>
+    </div>
+
+  </div>
+
+  <script src="shared.js"></script>
+<script src="ai-report.js"></script>
+<script src="compare.js?v=1"></script>
+
+</body>
+</html>
