@@ -5,18 +5,28 @@ function renderAIReport(report, verdictKeyword = "verdict") {
     .filter(Boolean);
 
   const headings = [
-    "Combat Identity",
-    "Fighting Blueprint",
-    "Signature Weapons",
-    "Keys to Victory",
-    "Danger Zones",
-    "Kombat Analyst Verdict",
-    "Fight Summary",
-    "Striking Battle",
-    "Grappling Battle",
-    "Pace & Cardio",
-    "Biggest X-Factor"
-  ];
+  "Combat Identity",
+  "Fighting Blueprint",
+  "Signature Weapons",
+  "Keys to Victory",
+  "Danger Zones",
+  "Kombat Analyst Verdict",
+
+  "Fight Summary",
+  "Striking Battle",
+  "Grappling Battle",
+  "Pace & Cardio",
+  "Biggest X-Factor",
+
+  "Style Philosophy",
+  "Core Weapons",
+  "Strengths",
+  "Weaknesses",
+  "Best Matchups",
+  "Danger Matchups",
+  "Modern MMA Relevance",
+  "Representative Fighters"
+];
 
   const sections = [];
   let currentTitle = "";

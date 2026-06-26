@@ -211,3 +211,86 @@ if (attributes) {
 }
 
 loadStyleFighters();
+
+async function generateStyleDebrief() {
+  const button = document.getElementById("analyze-style-btn");
+  const output = document.getElementById("ai-style-output");
+
+  if (!button || !output) {
+    console.error("AI elements not found.");
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const styleType = params.get("type");
+
+  button.disabled = true;
+  button.textContent = "Generating Style Debrief...";
+
+  output.innerHTML = `
+    <div class="ai-report-card">
+      <h3>Generating...</h3>
+      <p>Kombat Analyst is analyzing this combat style.</p>
+    </div>
+  `;
+
+  try {
+
+    const response = await fetch(
+      `${SUPABASE_URL}/functions/v1/analyze-style`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({
+          style: {
+            name: styleType,
+            doctrine: styleDoctrine[styleType],
+            attributes: styleAttributes[styleType],
+            matchup: styleMatchups[styleType]
+          }
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || result.status !== "success") {
+      throw new Error(result.message || "Style analysis failed.");
+    }
+
+    const renderedReport = renderAIReport(result.analysis);
+
+output.innerHTML = renderedReport.trim()
+  ? renderedReport
+  : `
+    <div class="ai-report-card">
+      <h3>Style Debrief</h3>
+      <p>${result.analysis.replace(/\n/g, "<br>")}</p>
+    </div>
+  `;
+
+button.textContent = "Style Debrief Generated";
+
+  } catch (error) {
+
+    console.error(error);
+
+    output.innerHTML = `
+      <div class="ai-report-card ai-verdict-card">
+        <h3>Analysis Failed</h3>
+        <p>${error.message}</p>
+      </div>
+    `;
+
+    button.disabled = false;
+    button.textContent = "🧠 Generate Style Debrief";
+  }
+}
+
+document
+  .getElementById("analyze-style-btn")
+  ?.addEventListener("click", generateStyleDebrief);

@@ -3042,7 +3042,7 @@ body {
 
 .ai-report-output{
 
-    display:none;
+    display:block;
 
     margin-top:28px;
 

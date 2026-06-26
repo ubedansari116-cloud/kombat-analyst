@@ -43,12 +43,32 @@
   <div class="style-attribute-grid"></div>
 </div>
 
+<div class="ai-analysis-card">
+
+  <button id="analyze-style-btn" class="analyze-btn">
+    🧠 Generate Style Debrief
+  </button>
+
 </div>
-  </section>
 
-  <div id="style-fighters"></div>
+<div id="ai-style-output" class="ai-report-output">
+  <div class="ai-report-card">
+    <h3>Style Debrief Preview</h3>
+    <p>
+      Generate a complete Kombat Analyst breakdown of this styles' philosophy,
+      core weapons, strengths, weaknesses, best matchups, danger matchups,
+      modern MMA relevance, and representative fighters.
+    </p>
+  </div>
+</div>
 
-  <script src="style-page.js"></script>
+</section>
+
+<div id="style-fighters"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="ai-report.js"></script>
+<script src="style-page.js"></script>
 
 </body>
 </html>
